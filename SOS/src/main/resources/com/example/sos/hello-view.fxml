@@ -174,10 +174,34 @@
             </StackPane>
          </top>
          <left>
-            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Game Mode">
+                     <StackPane.margin>
+                        <Insets bottom="50.0" />
+                     </StackPane.margin>
+                  </Label>
+                  <RadioButton mnemonicParsing="false" text="General Game">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="gameModeGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" selected="true" text="Simple Game" toggleGroup="$gameModeGroup">
+                     <StackPane.margin>
+                        <Insets bottom="-50.0" />
+                     </StackPane.margin>
+                  </RadioButton>
+               </children></StackPane>
          </left>
          <right>
-            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Board Size">
+                     <StackPane.margin>
+                        <Insets bottom="50.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children></StackPane>
          </right>
          <bottom>
             <HBox fx:id="bottomHBox" fillHeight="false" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -188,7 +212,7 @@
                            <StackPane.margin>
                               <Insets bottom="50.0" />
                            </StackPane.margin></Label>
-                        <RadioButton fx:id="player1S" mnemonicParsing="false" text="S">
+                        <RadioButton fx:id="player1S" mnemonicParsing="false" selected="true" text="S">
                            <toggleGroup>
                               <ToggleGroup fx:id="player1Group" />
                            </toggleGroup></RadioButton>
@@ -204,7 +228,7 @@
                            <StackPane.margin>
                               <Insets bottom="50.0" />
                            </StackPane.margin></Label>
-                        <RadioButton fx:id="player2S" mnemonicParsing="false" text="S">
+                        <RadioButton fx:id="player2S" mnemonicParsing="false" selected="true" text="S">
                            <toggleGroup>
                               <ToggleGroup fx:id="player2Group" />
                            </toggleGroup></RadioButton>

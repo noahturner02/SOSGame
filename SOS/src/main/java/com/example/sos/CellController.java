@@ -89,6 +89,9 @@ public class CellController {
         setClickEventHandler(cell21);
         setClickEventHandler(cell22);
     }
+
+
+
     @FXML
     public void initialize() {
         prepAllGrids();
