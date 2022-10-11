@@ -41,7 +41,7 @@ public class CellController {
     RadioButton player2S;
     @FXML
     RadioButton player2O;
-    private boolean playerTurn = false;
+    private boolean playerTurn = false; // 1 -> player 2's turn; 0 -> player 1's turn
 
 
     private void setClickEventHandler(StackPane cell) {
@@ -49,18 +49,18 @@ public class CellController {
         cell.setOnMouseClicked(event -> {
             if ((childrenList.get(0).isVisible() == false) && (childrenList.get(1).isVisible() == false)) {
                 if (playerTurn) {
-                    if (player1S.isSelected()) {
+                    if (player2S.isSelected()) {
                        childrenList.get(0).setVisible(true);
                     }
-                    else if (player1O.isSelected()) {
+                    else if (player2O.isSelected()) {
                         childrenList.get(1).setVisible(true);
                     }
                 }
                 else {
-                    if (player2S.isSelected()) {
+                    if (player1S.isSelected()) {
                         childrenList.get(0).setVisible(true);
                     }
-                    else if (player2O.isSelected()) {
+                    else if (player1O.isSelected()) {
                         childrenList.get(1).setVisible(true);
                     }
                 }
