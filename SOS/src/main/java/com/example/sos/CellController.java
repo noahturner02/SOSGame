@@ -46,34 +46,30 @@ public class CellController {
 
     private void setClickEventHandler(StackPane cell) {
         ObservableList<Node> childrenList = cell.getChildren();
-        cell.setOnMouseClicked(event -> {
-            if ((childrenList.get(0).isVisible() == false) && (childrenList.get(1).isVisible() == false)) {
-                if (playerTurn) {
+        cell.setOnMouseClicked(event -> { // Handles mouse click event
+            if ((childrenList.get(0).isVisible() == false) && (childrenList.get(1).isVisible() == false)) { // if square is empty
+                if (playerTurn) { // Retrieve the radio button value and place the piece in the square
                     if (player2S.isSelected()) {
-                       childrenList.get(0).setVisible(true);
-                    }
-                    else if (player2O.isSelected()) {
+                        childrenList.get(0).setVisible(true);
+                    } else if (player2O.isSelected()) {
                         childrenList.get(1).setVisible(true);
                     }
-                }
-                else {
+                } else {
                     if (player1S.isSelected()) {
                         childrenList.get(0).setVisible(true);
-                    }
-                    else if (player1O.isSelected()) {
+                    } else if (player1O.isSelected()) {
                         childrenList.get(1).setVisible(true);
                     }
                 }
-            }
-            System.out.println("Bruh");
-            playerTurn = !playerTurn;
-            if (playerTurn) {
-                player2Pane.setStyle("-fx-background-color: #6D9DD5");
-                player1Pane.setStyle("-fx-background-color: #FFFFFF");
-            }
-            else {
-                player2Pane.setStyle("-fx-background-color: #FFFFFF");
-                player1Pane.setStyle("-fx-background-color: #6D9DD5");
+                System.out.println("Bruh");
+                playerTurn = !playerTurn; // Change the turn
+                if (playerTurn) { // Set the color of the active player to blue
+                    player2Pane.setStyle("-fx-background-color: #6D9DD5");
+                    player1Pane.setStyle("-fx-background-color: #FFFFFF");
+                } else {
+                    player2Pane.setStyle("-fx-background-color: #FFFFFF");
+                    player1Pane.setStyle("-fx-background-color: #6D9DD5");
+                }
             }
         });
 
