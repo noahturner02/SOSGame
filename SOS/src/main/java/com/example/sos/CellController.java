@@ -3,30 +3,17 @@ package com.example.sos;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 
 public class CellController {
     @FXML
-    StackPane cell00;
-    @FXML
-    StackPane cell01;
-    @FXML
-    StackPane cell02;
-    @FXML
-    StackPane cell10;
-    @FXML
-    StackPane cell11;
-    @FXML
-    StackPane cell12;
-    @FXML
-    StackPane cell20;
-    @FXML
-    StackPane cell21;
-    @FXML
-    StackPane cell22;
+    GridPane gameBoard;
     @FXML
     HBox bottomHBox;
     @FXML
@@ -43,6 +30,27 @@ public class CellController {
     RadioButton player2O;
     private boolean playerTurn = false; // 1 -> player 2's turn; 0 -> player 1's turn
 
+    private void resizeBoard(int size) {
+        gameBoard.getChildren().clear();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                StackPane sp = new StackPane();
+                sp.setLayoutX(10);
+                sp.setLayoutY(10);
+                sp.setPrefHeight(150);
+                sp.setPrefWidth(200);
+                Label s = new Label("S");
+                s.setVisible(false);
+                s.setFont(new Font("System Bold", 26));
+                Label o = new Label("O");
+                o.setVisible(false);
+                o.setFont(new Font("System Bold", 26));
+                sp.getChildren().addAll(s, o);
+                gameBoard.add(sp, i, j);
+                gameBoard.setGridLinesVisible(true);
+            }
+        }
+    }
 
     private void setClickEventHandler(StackPane cell) {
         ObservableList<Node> childrenList = cell.getChildren();
@@ -75,15 +83,6 @@ public class CellController {
 
     }
     private void prepAllGrids() {
-        setClickEventHandler(cell00);
-        setClickEventHandler(cell01);
-        setClickEventHandler(cell02);
-        setClickEventHandler(cell10);
-        setClickEventHandler(cell11);
-        setClickEventHandler(cell12);
-        setClickEventHandler(cell20);
-        setClickEventHandler(cell21);
-        setClickEventHandler(cell22);
     }
 
 
@@ -95,5 +94,6 @@ public class CellController {
         HBox.setHgrow(player2Pane, Priority.ALWAYS);
         System.out.println("Initialized");
         player1Pane.setStyle("-fx-background-color: #6D9DD5");
+        //resizeBoard(3);
     }
 }
