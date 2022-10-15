@@ -19,7 +19,7 @@
          <center>
             <StackPane>
                <children>
-                  <GridPane fx:id="gameBoard" gridLinesVisible="true">
+                  <GridPane fx:id="gameBoard" gridLinesVisible="true" prefHeight="300.0" prefWidth="300.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -35,7 +35,7 @@
             </StackPane>
          </center>
          <top>
-            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <StackPane prefHeight="150.0" prefWidth="700.0" BorderPane.alignment="CENTER">
                <children>
                   <Label text="SOS Game">
                      <font>

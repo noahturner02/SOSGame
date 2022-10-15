@@ -5,10 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class CellController {
@@ -37,17 +35,17 @@ public class CellController {
                 StackPane sp = new StackPane();
                 sp.setLayoutX(10);
                 sp.setLayoutY(10);
-                sp.setPrefHeight(150);
-                sp.setPrefWidth(200);
+                sp.setPrefHeight(100);
+                sp.setPrefWidth(100);
+                sp.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                 Label s = new Label("S");
                 s.setVisible(false);
                 s.setFont(new Font("System Bold", 26));
                 Label o = new Label("O");
-                o.setVisible(false);
+                o.setVisible(true);
                 o.setFont(new Font("System Bold", 26));
                 sp.getChildren().addAll(s, o);
                 gameBoard.add(sp, i, j);
-                gameBoard.setGridLinesVisible(true);
             }
         }
     }
@@ -94,6 +92,6 @@ public class CellController {
         HBox.setHgrow(player2Pane, Priority.ALWAYS);
         System.out.println("Initialized");
         player1Pane.setStyle("-fx-background-color: #6D9DD5");
-        //resizeBoard(3);
+        resizeBoard(10);
     }
 }
