@@ -1,15 +1,24 @@
 package com.example.sos;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class CellController {
+
+    @FXML
+    Button newGameButton;
+    @FXML
+    Slider sizeSlider;
     @FXML
     GridPane gameBoard;
     @FXML
@@ -27,6 +36,12 @@ public class CellController {
     @FXML
     RadioButton player2O;
     private boolean playerTurn = false; // 1 -> player 2's turn; 0 -> player 1's turn
+
+
+
+    private int getSliderSize() {
+        return  (int) sizeSlider.getValue();
+    }
 
     private void resizeBoard(int size) {
         gameBoard.setMinWidth(500);
@@ -87,18 +102,26 @@ public class CellController {
         });
 
     }
-    private void prepAllGrids() {
-    }
-
 
 
     @FXML
     public void initialize() {
-        prepAllGrids();
         HBox.setHgrow(player1Pane, Priority.ALWAYS);
         HBox.setHgrow(player2Pane, Priority.ALWAYS);
+        newGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("new game'd");
+                resizeBoard(getSliderSize());
+                playerTurn = false;
+                player1S.setSelected(true);
+                player2S.setSelected(true);
+                player1Pane.setStyle("-fx-background-color: #6D9DD5");
+                player2Pane.setStyle("-fx-background-color: #FFFFFF");
+            }
+        });
         System.out.println("Initialized");
         player1Pane.setStyle("-fx-background-color: #6D9DD5");
-        resizeBoard(10);
+        resizeBoard(3);
     }
 }
