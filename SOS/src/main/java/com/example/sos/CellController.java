@@ -48,10 +48,11 @@ public class CellController {
                 s.setVisible(false);
                 s.setFont(new Font("System Bold", 26));
                 Label o = new Label("O");
-                o.setVisible(true);
+                o.setVisible(false);
                 o.setFont(new Font("System Bold", 26));
                 sp.getChildren().addAll(s, o);
                 gameBoard.add(sp, i, j);
+                setClickEventHandler(sp);
             }
         }
     }
@@ -98,6 +99,6 @@ public class CellController {
         HBox.setHgrow(player2Pane, Priority.ALWAYS);
         System.out.println("Initialized");
         player1Pane.setStyle("-fx-background-color: #6D9DD5");
-        resizeBoard(4);
+        resizeBoard(10);
     }
 }
