@@ -29,14 +29,20 @@ public class CellController {
     private boolean playerTurn = false; // 1 -> player 2's turn; 0 -> player 1's turn
 
     private void resizeBoard(int size) {
+        gameBoard.setMinWidth(500);
+        gameBoard.setMaxWidth(500);
+        gameBoard.setMinHeight(500);
+        gameBoard.setMaxHeight(500);
         gameBoard.getChildren().clear();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 StackPane sp = new StackPane();
                 sp.setLayoutX(10);
                 sp.setLayoutY(10);
-                sp.setPrefHeight(100);
-                sp.setPrefWidth(100);
+                sp.setMinWidth(gameBoard.getMinWidth() / size);
+                sp.setMaxWidth(gameBoard.getMaxWidth() / size);
+                sp.setMinHeight(gameBoard.getMinHeight() / size);
+                sp.setMaxHeight(gameBoard.getMaxHeight() / size);
                 sp.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                 Label s = new Label("S");
                 s.setVisible(false);
@@ -92,6 +98,6 @@ public class CellController {
         HBox.setHgrow(player2Pane, Priority.ALWAYS);
         System.out.println("Initialized");
         player1Pane.setStyle("-fx-background-color: #6D9DD5");
-        resizeBoard(10);
+        resizeBoard(4);
     }
 }
