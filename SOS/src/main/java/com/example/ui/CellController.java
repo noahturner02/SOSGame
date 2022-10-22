@@ -1,4 +1,4 @@
-package com.example.sos;
+package com.example.ui;
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;

@@ -3,6 +3,6 @@ module com.example.sos {
     requires javafx.fxml;
 
 
-    opens com.example.sos to javafx.fxml;
-    exports com.example.sos;
+    opens com.example.ui to javafx.fxml;
+    exports com.example.ui;
 }
