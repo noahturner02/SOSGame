@@ -8,4 +8,7 @@ public class Cell {
     public cellStatus getStatus() {
         return status;
     }
+    public void setStatus(cellStatus status) {
+        this.status = status;
+    }
 }

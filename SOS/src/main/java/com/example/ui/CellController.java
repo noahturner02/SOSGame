@@ -1,8 +1,6 @@
 package com.example.ui;
 
-import com.example.gamelogic.Game;
-import com.example.gamelogic.GameBoard;
-import com.example.gamelogic.GameMode;
+import com.example.gamelogic.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -92,8 +90,12 @@ public class CellController {
     }
 
     private void setClickEventHandler(StackPane cell) {
+
         ObservableList<Node> childrenList = cell.getChildren();
         cell.setOnMouseClicked(event -> { // Handles mouse click event
+
+            // Processing click in game logic
+
             if ((childrenList.get(0).isVisible() == false) && (childrenList.get(1).isVisible() == false)) { // if square is empty
                 if (playerTurn) { // Retrieve the radio button value and place the piece in the square
                     if (player2S.isSelected()) {
@@ -127,7 +129,8 @@ public class CellController {
     public void initialize() {
         HBox.setHgrow(player1Pane, Priority.ALWAYS);
         HBox.setHgrow(player2Pane, Priority.ALWAYS);
-        newGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        newGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() { // Handles newGameButton Clicks
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("new game'd");
@@ -139,6 +142,39 @@ public class CellController {
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
             }
         });
+
+        player1S.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Player 1 Using S's");
+                game.setPlayer1PieceSelected(SelectedPiece.S);
+            }
+        });
+
+        player1O.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Player 1 Using O's");
+                game.setPlayer1PieceSelected(SelectedPiece.O);
+            }
+        });
+
+        player2S.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Player 2 Using S's");
+                game.setPlayer1PieceSelected(SelectedPiece.S);
+            }
+        });
+
+        player2O.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Player 2 Using O's");
+                game.setPlayer2PieceSelected(SelectedPiece.O);
+            }
+        });
+
         System.out.println("Initialized");
         player1Pane.setStyle("-fx-background-color: #6D9DD5");
         resizeBoard(3);
