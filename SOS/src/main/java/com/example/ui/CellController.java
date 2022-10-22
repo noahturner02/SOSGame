@@ -1,5 +1,7 @@
 package com.example.ui;
 
+import com.example.gamelogic.Game;
+import com.example.gamelogic.GameMode;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -37,7 +39,7 @@ public class CellController {
     RadioButton player2O;
     private boolean playerTurn = false; // 1 -> player 2's turn; 0 -> player 1's turn
 
-
+    private Game game = new Game(GameMode.SIMPLE, 3);
 
     private int getSliderSize() {
         return  (int) sizeSlider.getValue();
