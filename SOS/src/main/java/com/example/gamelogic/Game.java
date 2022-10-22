@@ -5,7 +5,7 @@ public class Game {
     private int gameSize;
     private boolean playerTurn; // 0 -> player 1's turn; 1 -> player 2's turn
     private boolean gameFinished; // 0 -> game in progress; 1 -> game finished
-    private GameBoard board;
+    public GameBoard board;
     public Game(GameMode gameMode, int gameSize) {
         this.gameMode = gameMode;
         this.gameSize = gameSize;

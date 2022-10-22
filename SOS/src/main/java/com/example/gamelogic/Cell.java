@@ -5,4 +5,7 @@ public class Cell {
     Cell(cellStatus status) {
         this.status = status;
     }
+    public cellStatus getStatus() {
+        return status;
+    }
 }

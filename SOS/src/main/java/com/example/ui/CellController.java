@@ -1,6 +1,7 @@
 package com.example.ui;
 
 import com.example.gamelogic.Game;
+import com.example.gamelogic.GameBoard;
 import com.example.gamelogic.GameMode;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -46,6 +47,8 @@ public class CellController {
     }
 
     private void resizeBoard(int size) {
+        game.board.resizeBoard(size);
+
         gameBoard.setMinWidth(500);
         gameBoard.setMaxWidth(500);
         gameBoard.setMinHeight(500);
@@ -62,12 +65,26 @@ public class CellController {
                 sp.setMaxHeight(gameBoard.getMaxHeight() / size);
                 sp.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                 Label s = new Label("S");
-                s.setVisible(false);
                 s.setFont(new Font("System Bold", 26));
                 Label o = new Label("O");
-                o.setVisible(false);
                 o.setFont(new Font("System Bold", 26));
                 sp.getChildren().addAll(s, o);
+
+                switch (game.board.getCellByIndex(i, j).getStatus()) {
+                    case EMPTY:
+                        s.setVisible(false);
+                        o.setVisible(false);
+                        break;
+                    case O:
+                        s.setVisible(false);
+                        o.setVisible(true);
+                        break;
+                    case S:
+                        s.setVisible(true);
+                        o.setVisible(false);
+                        break;
+                }
+
                 gameBoard.add(sp, i, j);
                 setClickEventHandler(sp);
             }
