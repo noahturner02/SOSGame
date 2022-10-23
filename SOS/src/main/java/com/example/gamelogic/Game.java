@@ -3,7 +3,7 @@ package com.example.gamelogic;
 public class Game {
     private GameMode gameMode;
     private int gameSize;
-    private boolean playerTurn; // 0 -> player 1's turn; 1 -> player 2's turn
+    private PlayerTurn playerTurn;
     private boolean gameFinished; // 0 -> game in progress; 1 -> game finished
     private SelectedPiece player1PieceSelected = SelectedPiece.S;
     private SelectedPiece player2PieceSelected = SelectedPiece.S;
@@ -11,11 +11,11 @@ public class Game {
     public Game(GameMode gameMode, int gameSize) {
         this.gameMode = gameMode;
         this.gameSize = gameSize;
-        playerTurn = false;
+        playerTurn = PlayerTurn.PLAYER1;
         gameFinished = false;
         board = new GameBoard(gameSize);
     }
-    public void setPlayerTurn(boolean playerTurn) {
+    public void setPlayerTurn(PlayerTurn playerTurn) {
         this.playerTurn = playerTurn;
     }
     public void setGameFinished(boolean gameFinished) {
@@ -32,5 +32,8 @@ public class Game {
     }
     public SelectedPiece getPlayer2PieceSelected() {
         return player2PieceSelected;
+    }
+    public PlayerTurn getPlayerTurn() {
+        return playerTurn;
     }
 }

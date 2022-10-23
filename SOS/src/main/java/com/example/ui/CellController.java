@@ -95,31 +95,69 @@ public class CellController {
         cell.setOnMouseClicked(event -> { // Handles mouse click event
 
             // Processing click in game logic
-
-            if ((childrenList.get(0).isVisible() == false) && (childrenList.get(1).isVisible() == false)) { // if square is empty
-                if (playerTurn) { // Retrieve the radio button value and place the piece in the square
-                    if (player2S.isSelected()) {
-                        childrenList.get(0).setVisible(true);
-                    } else if (player2O.isSelected()) {
-                        childrenList.get(1).setVisible(true);
+            if (game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).getStatus() == cellStatus.EMPTY) {
+                if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                    if (game.getPlayer1PieceSelected() == SelectedPiece.S) {
+                        game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
                     }
-                } else {
-                    if (player1S.isSelected()) {
-                        childrenList.get(0).setVisible(true);
-                    } else if (player1O.isSelected()) {
-                        childrenList.get(1).setVisible(true);
+                    else if (game.getPlayer1PieceSelected() == SelectedPiece.O) {
+                        game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
+                    game.setPlayerTurn(PlayerTurn.PLAYER2);
                 }
-                System.out.println("Bruh");
-                playerTurn = !playerTurn; // Change the turn
-                if (playerTurn) { // Set the color of the active player to blue
-                    player2Pane.setStyle("-fx-background-color: #6D9DD5");
-                    player1Pane.setStyle("-fx-background-color: #FFFFFF");
-                } else {
-                    player2Pane.setStyle("-fx-background-color: #FFFFFF");
-                    player1Pane.setStyle("-fx-background-color: #6D9DD5");
+                else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+                    if (game.getPlayer2PieceSelected() == SelectedPiece.S) {
+                        game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
+                    }
+                    else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
+                        game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
+                    }
+                    game.setPlayerTurn(PlayerTurn.PLAYER1);
                 }
             }
+
+            // UI control
+            switch (game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).getStatus()) {
+                case S:
+                    childrenList.get(0).setVisible(true);
+                    break;
+                case O:
+                    childrenList.get(1).setVisible(true);
+                    break;
+            }
+            if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                player2Pane.setStyle("-fx-background-color: #FFFFFF");
+                player1Pane.setStyle("-fx-background-color: #6D9DD5");
+            }
+            else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+                player2Pane.setStyle("-fx-background-color: #6D9DD5");
+                player1Pane.setStyle("-fx-background-color: #FFFFFF");
+            }
+
+//            if ((childrenList.get(0).isVisible() == false) && (childrenList.get(1).isVisible() == false)) { // if square is empty
+//                if (playerTurn) { // Retrieve the radio button value and place the piece in the square
+//                    if (player2S.isSelected()) {
+//                        childrenList.get(0).setVisible(true);
+//                    } else if (player2O.isSelected()) {
+//                        childrenList.get(1).setVisible(true);
+//                    }
+//                } else {
+//                    if (player1S.isSelected()) {
+//                        childrenList.get(0).setVisible(true);
+//                    } else if (player1O.isSelected()) {
+//                        childrenList.get(1).setVisible(true);
+//                    }
+//                }
+//                System.out.println("Bruh");
+//                playerTurn = !playerTurn; // Change the turn
+//                if (playerTurn) { // Set the color of the active player to blue
+//                    player2Pane.setStyle("-fx-background-color: #6D9DD5");
+//                    player1Pane.setStyle("-fx-background-color: #FFFFFF");
+//                } else {
+//                    player2Pane.setStyle("-fx-background-color: #FFFFFF");
+//                    player1Pane.setStyle("-fx-background-color: #6D9DD5");
+//                }
+//            }
         });
 
     }
@@ -135,9 +173,11 @@ public class CellController {
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("new game'd");
                 resizeBoard(getSliderSize());
-                playerTurn = false;
+                game.setPlayerTurn(PlayerTurn.PLAYER1);
                 player1S.setSelected(true);
                 player2S.setSelected(true);
+                game.setPlayer1PieceSelected(SelectedPiece.S);
+                game.setPlayer2PieceSelected(SelectedPiece.S);
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
             }
@@ -163,7 +203,7 @@ public class CellController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("Player 2 Using S's");
-                game.setPlayer1PieceSelected(SelectedPiece.S);
+                game.setPlayer2PieceSelected(SelectedPiece.S);
             }
         });
 
