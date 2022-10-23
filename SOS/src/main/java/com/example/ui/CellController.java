@@ -36,7 +36,6 @@ public class CellController {
     RadioButton player2S;
     @FXML
     RadioButton player2O;
-    private boolean playerTurn = false; // 1 -> player 2's turn; 0 -> player 1's turn
 
     private Game game = new Game(GameMode.SIMPLE, 3);
 
