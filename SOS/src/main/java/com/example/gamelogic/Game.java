@@ -8,6 +8,7 @@ public class Game {
     private SelectedPiece player1PieceSelected = SelectedPiece.S;
     private SelectedPiece player2PieceSelected = SelectedPiece.S;
     public GameBoard board;
+
     public Game(GameMode gameMode, int gameSize) {
         this.gameMode = gameMode;
         this.gameSize = gameSize;
@@ -27,6 +28,9 @@ public class Game {
     public void setPlayer2PieceSelected(SelectedPiece s) {
         player2PieceSelected = s;
     }
+    public void setGameMode(GameMode g) {
+        gameMode = g;
+    }
     public SelectedPiece getPlayer1PieceSelected() {
         return player1PieceSelected;
     }
@@ -35,5 +39,8 @@ public class Game {
     }
     public PlayerTurn getPlayerTurn() {
         return playerTurn;
+    }
+    public GameMode getGameMode() {
+        return gameMode;
     }
 }

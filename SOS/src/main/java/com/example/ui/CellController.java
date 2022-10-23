@@ -42,6 +42,22 @@ public class CellController {
     private int getSliderSize() {
         return  (int) sizeSlider.getValue();
     }
+    private void setNewGameButtonHandler() {
+        newGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() { // Handles newGameButton Clicks
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("new game'd");
+                resizeBoard(getSliderSize());
+                game.setPlayerTurn(PlayerTurn.PLAYER1);
+                player1S.setSelected(true);
+                player2S.setSelected(true);
+                game.setPlayer1PieceSelected(SelectedPiece.S);
+                game.setPlayer2PieceSelected(SelectedPiece.S);
+                player1Pane.setStyle("-fx-background-color: #6D9DD5");
+                player2Pane.setStyle("-fx-background-color: #FFFFFF");
+            }
+        });
+    }
 
     private void resizeBoard(int size) {
         game.board.resizeBoard(size);
@@ -167,20 +183,7 @@ public class CellController {
         HBox.setHgrow(player1Pane, Priority.ALWAYS);
         HBox.setHgrow(player2Pane, Priority.ALWAYS);
 
-        newGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() { // Handles newGameButton Clicks
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println("new game'd");
-                resizeBoard(getSliderSize());
-                game.setPlayerTurn(PlayerTurn.PLAYER1);
-                player1S.setSelected(true);
-                player2S.setSelected(true);
-                game.setPlayer1PieceSelected(SelectedPiece.S);
-                game.setPlayer2PieceSelected(SelectedPiece.S);
-                player1Pane.setStyle("-fx-background-color: #6D9DD5");
-                player2Pane.setStyle("-fx-background-color: #FFFFFF");
-            }
-        });
+        setNewGameButtonHandler();
 
         player1S.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
