@@ -17,6 +17,10 @@ import javafx.scene.text.Font;
 public class CellController {
 
     @FXML
+    RadioButton simpleGame;
+    @FXML
+    RadioButton generalGame;
+    @FXML
     Button newGameButton;
     @FXML
     Slider sizeSlider;
@@ -53,6 +57,12 @@ public class CellController {
                 player2S.setSelected(true);
                 game.setPlayer1PieceSelected(SelectedPiece.S);
                 game.setPlayer2PieceSelected(SelectedPiece.S);
+                if (simpleGame.isSelected()) {
+                    game.setGameMode(GameMode.SIMPLE);
+                }
+                else {
+                    game.setGameMode(GameMode.GENERAL);
+                }
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
             }
