@@ -107,7 +107,6 @@ public class CellController {
                         o.setVisible(false);
                         break;
                 }
-
                 gameBoard.add(sp, i, j);
                 setClickEventHandler(sp);
             }

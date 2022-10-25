@@ -19,8 +19,8 @@ public class GameBoard {
     }
 
     public void resizeBoard(int size) {
-        gameGrid = new ArrayList<>();
         if ((size >= 3) && (size <= 10)) {
+            gameGrid = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 List<Cell> innerList = new ArrayList<>();
                 for (int j = 0; j < size; j++) {
