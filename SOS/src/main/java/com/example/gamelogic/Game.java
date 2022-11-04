@@ -1,6 +1,6 @@
 package com.example.gamelogic;
 
-public class Game {
+public abstract class Game {
     private GameMode gameMode;
     private int gameSize;
     private PlayerTurn playerTurn;

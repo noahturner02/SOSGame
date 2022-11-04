@@ -41,7 +41,7 @@ public class CellController {
     @FXML
     RadioButton player2O;
 
-    private Game game = new Game(GameMode.SIMPLE, 3);
+    private Game game = new SimpleGame(3);
 
     private int getSliderSize() {
         return  (int) sizeSlider.getValue();
@@ -51,18 +51,18 @@ public class CellController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("new game'd");
+                if (simpleGame.isSelected()) {
+                    game = new SimpleGame(getSliderSize());
+                }
+                else {
+                    game = new GeneralGame(getSliderSize());
+                }
                 resizeBoard(getSliderSize());
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
                 player1S.setSelected(true);
                 player2S.setSelected(true);
                 game.setPlayer1PieceSelected(SelectedPiece.S);
                 game.setPlayer2PieceSelected(SelectedPiece.S);
-                if (simpleGame.isSelected()) {
-                    game.setGameMode(GameMode.SIMPLE);
-                }
-                else {
-                    game.setGameMode(GameMode.GENERAL);
-                }
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
             }
