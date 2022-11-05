@@ -138,7 +138,7 @@ public class CellController {
                     }
                     game.setPlayerTurn(PlayerTurn.PLAYER1);
                 }
-                game.board.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
+                game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
             }
 
             // UI control
