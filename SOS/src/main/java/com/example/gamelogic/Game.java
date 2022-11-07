@@ -50,11 +50,11 @@ public abstract class Game {
         List<Coordinate> sosCells = new ArrayList<>();
         if (board.getCellByIndex(row, column).getStatus() == cellStatus.S) {
             // Find which directions that an SOS can extend from
-            sosCells.add(new Coordinate(row, column));
             if ((row + 2) <= board.getGameGrid().size() - 1) { // there are at least two spaces above the S
                 if (board.getCellByIndex(row + 1, column).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row + 1, column));
                     if (board.getCellByIndex(row + 2, column).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row + 1, column));
                         sosCells.add(new Coordinate(row + 2, column));
                         System.out.println("SOS North of S");
                     }
@@ -62,8 +62,9 @@ public abstract class Game {
             }
             if (((row + 2) <= board.getGameGrid().size() - 1) && ((column + 2) <= board.getGameGrid().size() - 1)) { // There are two spaces NE of the S
                 if (board.getCellByIndex(row + 1, column + 1).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row + 1, column + 1));
                     if (board.getCellByIndex(row + 2, column + 2).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row + 1, column + 1));
                         sosCells.add(new Coordinate(row + 2, column + 2));
                         System.out.println("SOS NE of S");
                     }
@@ -71,8 +72,9 @@ public abstract class Game {
             }
             if ((column + 2) <= board.getGameGrid().size() - 1) { // There are two spaces E of the S
                 if (board.getCellByIndex(row, column + 1).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row, column + 1));
                     if (board.getCellByIndex(row, column + 2).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row, column + 1));
                         sosCells.add(new Coordinate(row, column + 2));
                         System.out.println("SOS E of S");
                     }
@@ -80,8 +82,9 @@ public abstract class Game {
             }
             if (((row - 2) >= 0) && ((column + 2) <= board.getGameGrid().size() - 1)) { // There are two spaces SE of the S
                 if (board.getCellByIndex(row -1, column + 1).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row - 1, column + 1));
                     if (board.getCellByIndex(row -2, column + 2).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row - 1, column + 1));
                         sosCells.add(new Coordinate(row - 2, column + 2));
                         System.out.println("SOS SE of S");
                     }
@@ -89,8 +92,9 @@ public abstract class Game {
             }
             if ((row - 2) >= 0) { // There are two spaces S of the S
                 if (board.getCellByIndex(row -1, column).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row - 1, column));
                     if (board.getCellByIndex(row -2, column).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row - 1, column));
                         sosCells.add(new Coordinate(row - 2, column));
                         System.out.println("SOS South of the S");
                     }
@@ -98,8 +102,9 @@ public abstract class Game {
             }
             if (((row - 2) >= 0) && ((column - 2) >= 0)) {
                 if (board.getCellByIndex(row -1, column -1).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row - 1, column - 1));
                     if (board.getCellByIndex(row-2, column -2).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row - 1, column - 1));
                         sosCells.add(new Coordinate(row - 2, column - 2));
                         System.out.println("SOS SW of the S");
                     }
@@ -107,8 +112,9 @@ public abstract class Game {
             }
             if ((column - 2) >= 0) {
                 if (board.getCellByIndex(row, column -1).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row, column - 1));
                     if (board.getCellByIndex(row, column-2).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row, column - 1));
                         sosCells.add(new Coordinate(row, column - 2));
                         System.out.println("SOS W of the S");
                     }
@@ -116,20 +122,21 @@ public abstract class Game {
             }
             if (((row + 2) <= board.getGameGrid().size() - 1) && ((column - 2) >= 0)) {
                 if (board.getCellByIndex(row + 1, column - 1).getStatus() == cellStatus.O) {
-                    sosCells.add(new Coordinate(row + 1, column - 1));
                     if (board.getCellByIndex(row +2, column -2).getStatus() == cellStatus.S) {
+                        sosCells.add(new Coordinate(row, column));
+                        sosCells.add(new Coordinate(row + 1, column - 1));
                         sosCells.add(new Coordinate(row + 2, column - 2));
                         System.out.println("SOS NW of S");
                     }
                 }
             }
         } else if (board.getCellByIndex(row, column).getStatus() == cellStatus.O) {
-            sosCells.add(new Coordinate(row, column));
             if ((row + 1) <= board.getGameGrid().size() - 1) {
                 if ((row - 1) >= 0) { // There are squares above and below the O
                     if (board.getCellByIndex(row + 1, column).getStatus() == cellStatus.S) {
-                        sosCells.add(new Coordinate(row + 1, column));
                         if (board.getCellByIndex(row -1, column).getStatus() == cellStatus.S) {
+                            sosCells.add(new Coordinate(row + 1, column));
+                            sosCells.add(new Coordinate(row, column));
                             sosCells.add(new Coordinate(row - 1, column));
                             System.out.println("Vertical SOS with O");
                         }
@@ -139,8 +146,9 @@ public abstract class Game {
             if (((row + 1) <= board.getGameGrid().size() - 1) && ((column + 1) <= board.getGameGrid().size() - 1)) {
                 if (((row - 1) >= 0) && ((column - 1) >= 0)) { // There are squares in the \ diagonal
                     if (board.getCellByIndex(row + 1, column + 1).getStatus() == cellStatus.S) {
-                        sosCells.add(new Coordinate(row + 1, column + 1));
                         if (board.getCellByIndex(row - 1, column - 1).getStatus() == cellStatus.S) {
+                            sosCells.add(new Coordinate(row + 1, column + 1));
+                            sosCells.add(new Coordinate(row, column));
                             sosCells.add(new Coordinate(row - 1, column - 1));
                             System.out.println("\\ SOS with O");
                         }
@@ -150,8 +158,9 @@ public abstract class Game {
             if ((column + 1) <= board.getGameGrid().size() - 1) {
                 if ((column - 1) >= 0) { // There are squares left and right of the O
                     if (board.getCellByIndex(row, column + 1).getStatus() == cellStatus.S) {
-                        sosCells.add(new Coordinate(row, column + 1));
                         if (board.getCellByIndex(row, column - 1).getStatus() == cellStatus.S) {
+                            sosCells.add(new Coordinate(row, column + 1));
+                            sosCells.add(new Coordinate(row, column));
                             sosCells.add(new Coordinate(row, column - 1));
                             System.out.println("Horizontal SOS with O");
                         }
@@ -161,8 +170,9 @@ public abstract class Game {
             if (((row + 1) <= board.getGameGrid().size() - 1) && ((column - 1) >= 0)) {
                 if (((row - 1) >= 0) && ((column + 1) <= board.getGameGrid().size() - 1)) { // There are squares in the / diagonal
                     if (board.getCellByIndex(row + 1, column - 1).getStatus() == cellStatus.S) {
-                        sosCells.add(new Coordinate(row + 1, column - 1));
                         if (board.getCellByIndex(row - 1, column + 1).getStatus() == cellStatus.S) {
+                            sosCells.add(new Coordinate(row + 1, column - 1));
+                            sosCells.add(new Coordinate(row, column));
                             sosCells.add(new Coordinate(row - 1, column + 1));
                             System.out.println("/ SOS with O");
                         }
