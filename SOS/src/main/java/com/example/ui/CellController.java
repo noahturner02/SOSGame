@@ -88,6 +88,8 @@ public class CellController {
 
     private void resizeBoard(int size) {
         game.board.resizeBoard(size);
+        Node n = null;
+        ObservableList<Node> childrenList = gridpaneWrapper.getChildren();
 
         gameBoard.setMinWidth(500);
         gameBoard.setMaxWidth(500);
@@ -127,6 +129,9 @@ public class CellController {
                 gameBoard.add(sp, i, j);
                 setClickEventHandler(sp);
             }
+        }
+        while (childrenList.size() > 1) {
+            childrenList.remove(1);
         }
     }
 
