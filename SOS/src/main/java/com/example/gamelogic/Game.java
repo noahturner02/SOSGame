@@ -132,6 +132,7 @@ public abstract class Game {
                 }
             }
         } else if (board.getCellByIndex(row, column).getStatus() == cellStatus.O) {
+            sosCells.add(board.getCellByIndex(row, column));
             if ((row + 1) <= board.getGameGrid().size() - 1) {
                 if ((row - 1) >= 0) { // There are squares above and below the O
                     if (board.getCellByIndex(row + 1, column).getStatus() == cellStatus.S) {
