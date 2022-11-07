@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CellController {
@@ -134,7 +135,7 @@ public class CellController {
         cell.setOnMouseClicked(event -> { // Handles mouse click event
 
             // Processing click in game logic
-            List<Coordinate> SOSList = null;
+            List<Coordinate> SOSList = new ArrayList<>();
             if (game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).getStatus() == cellStatus.EMPTY) {
                 if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
                     if (game.getPlayer1PieceSelected() == SelectedPiece.S) {
