@@ -19,6 +19,12 @@ public class GeneralGame extends Game{
             }
             System.out.println("Player 1: " + player1Points + "\nPlayer 2: " + player2Points);
         }
+        if (super.board.isFull()) {
+            super.setGameFinished(true);
+        }
+        else {
+            super.setGameFinished(false);
+        }
         return sosList;
     }
 }

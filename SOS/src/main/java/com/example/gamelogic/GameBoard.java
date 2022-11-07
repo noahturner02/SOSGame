@@ -38,7 +38,14 @@ public class GameBoard {
     public Cell getCellByIndex(int row, int column) {
         return gameGrid.get(row).get(column);
     }
-    public void clickCell(int row, int column) {
-        // fill in later
+    public boolean isFull() {
+        for (List<Cell> row: gameGrid) {
+            for (Cell cell : row) {
+                if (cell.getStatus() == cellStatus.EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
