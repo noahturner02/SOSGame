@@ -8,8 +8,8 @@ public class SimpleGame extends Game{
         super(GameMode.SIMPLE, gameSize);
     }
     @Override
-    public List<Cell> checkForSOS(int row, int column) {
-        List<Cell> sosList = super.checkForSOS(row, column);
+    public List<Coordinate> checkForSOS(int row, int column) {
+        List<Coordinate> sosList = super.checkForSOS(row, column);
         if (sosList.isEmpty()) {
             super.setGameFinished(false);
         }
