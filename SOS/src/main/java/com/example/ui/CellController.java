@@ -48,7 +48,16 @@ public class CellController {
     @FXML
     RadioButton player2O;
 
+
+
     private Game game = new SimpleGame(3);
+
+    private void winDisplay() {
+        ObservableList<Node> childrenList = gameBoard.getChildren();
+        for (Node node : childrenList) {
+            node.setOnMouseClicked(null);
+        }
+    }
 
     private StackPane getChildFromGridPaneByRowAndColumn(int row, int column) {
         ObservableList<Node> childrenList = gameBoard.getChildren();
@@ -161,6 +170,9 @@ public class CellController {
                 }
                 SOSList = game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
             }
+            if (game.getGameFinished()) {
+                winDisplay();
+            }
 
             // UI control
 
@@ -200,7 +212,7 @@ public class CellController {
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
             } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
-                player2Pane.setStyle("-fx-background-color: #6D9DD5");
+                player2Pane.setStyle("-fx-background-color: #CC4B23");
                 player1Pane.setStyle("-fx-background-color: #FFFFFF");
             }
         });
