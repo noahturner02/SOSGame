@@ -4,6 +4,7 @@ import com.example.gamelogic.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +22,7 @@ import java.util.List;
 public class CellController {
 
     @FXML
-    StackPane gridpaneParent;
+    Group gridpaneWrapper;
     @FXML
     RadioButton simpleGame;
     @FXML
@@ -162,11 +163,11 @@ public class CellController {
                 while (SOSList.size() >= 3) {
                     StackPane startCell = getChildFromGridPaneByRowAndColumn(SOSList.get(0).getX(), SOSList.get(0).getY());
                     StackPane endCell = getChildFromGridPaneByRowAndColumn(SOSList.get(2).getX(), SOSList.get(2).getY());
-                    double startX = startCell.getLayoutX();
-                    double startY = startCell.getLayoutY();
-                    double endX = endCell.getLayoutX();
-                    double endY = endCell.getLayoutY();
-                    gridpaneParent.getChildren().add(new Line(startX, startY, endX, endY));
+                    double startX = startCell.getLayoutX() + (startCell.getWidth() / 2);
+                    double startY = startCell.getLayoutY() + (startCell.getHeight() / 2);
+                    double endX = endCell.getLayoutX() + (startCell.getWidth() / 2);
+                    double endY = endCell.getLayoutY() + (startCell.getHeight() / 2);
+                    gridpaneWrapper.getChildren().add(new Line(startX, startY, endX, endY));
                     SOSList.remove(0);
                     SOSList.remove(0);
                     SOSList.remove(0);
