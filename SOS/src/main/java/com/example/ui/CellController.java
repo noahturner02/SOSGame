@@ -167,7 +167,15 @@ public class CellController {
                     double startY = startCell.getLayoutY() + (startCell.getHeight() / 2);
                     double endX = endCell.getLayoutX() + (startCell.getWidth() / 2);
                     double endY = endCell.getLayoutY() + (startCell.getHeight() / 2);
-                    gridpaneWrapper.getChildren().add(new Line(startX, startY, endX, endY));
+                    Line line = new Line(startX, startY, endX, endY);
+                    line.setStrokeWidth(5);
+                    if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                        line.setStyle("-fx-stroke: red");
+                    }
+                    else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+                        line.setStyle("-fx-stroke: blue");
+                    }
+                    gridpaneWrapper.getChildren().add(line);
                     SOSList.remove(0);
                     SOSList.remove(0);
                     SOSList.remove(0);
