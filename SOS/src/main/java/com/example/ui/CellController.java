@@ -12,10 +12,15 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+
+import java.util.List;
 
 public class CellController {
 
+    @FXML
+    StackPane gridpaneParent;
     @FXML
     RadioButton simpleGame;
     @FXML
@@ -42,6 +47,16 @@ public class CellController {
     RadioButton player2O;
 
     private Game game = new SimpleGame(3);
+
+    private StackPane getChildFromGridPaneByRowAndColumn(int row, int column) {
+        ObservableList<Node> childrenList = gameBoard.getChildren();
+        for (Node node : childrenList) {
+            if ((gameBoard.getRowIndex(node) == row) && (gameBoard.getColumnIndex(node) == column)) {
+                return (StackPane) node;
+            }
+        }
+        return null;
+    }
 
     private int getSliderSize() {
         return  (int) sizeSlider.getValue();
@@ -119,18 +134,16 @@ public class CellController {
         cell.setOnMouseClicked(event -> { // Handles mouse click event
 
             // Processing click in game logic
+            List<Coordinate> SOSList = null;
             if (game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).getStatus() == cellStatus.EMPTY) {
                 if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
                     if (game.getPlayer1PieceSelected() == SelectedPiece.S) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
-                    }
-                    else if (game.getPlayer1PieceSelected() == SelectedPiece.O) {
+                    } else if (game.getPlayer1PieceSelected() == SelectedPiece.O) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
-                    game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
                     game.setPlayerTurn(PlayerTurn.PLAYER2);
-                }
-                else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+                } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                     if (game.getPlayer2PieceSelected() == SelectedPiece.S) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
                     } else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
@@ -139,9 +152,27 @@ public class CellController {
                     game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
                     game.setPlayerTurn(PlayerTurn.PLAYER1);
                 }
+                SOSList = game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
             }
 
             // UI control
+
+            if (SOSList.size() >= 3) {
+                while (SOSList.size() >= 3) {
+                    StackPane startCell = getChildFromGridPaneByRowAndColumn(SOSList.get(0).getX(), SOSList.get(0).getY());
+                    StackPane endCell = getChildFromGridPaneByRowAndColumn(SOSList.get(2).getX(), SOSList.get(2).getY());
+                    double startX = startCell.getLayoutX();
+                    double startY = startCell.getLayoutY();
+                    double endX = endCell.getLayoutX();
+                    double endY = endCell.getLayoutY();
+                    Line line = new Line(startX, startY, endX, endY);
+                    gridpaneParent.getChildren().add(line);
+                    SOSList.remove(1);
+                    SOSList.remove(1);
+                    System.out.println("Line created: " + startX + " " + startY + " " + endX + " " + endY);
+                }
+            }
+
             switch (game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).getStatus()) {
                 case S:
                     childrenList.get(0).setVisible(true);
@@ -153,8 +184,7 @@ public class CellController {
             if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
-            }
-            else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+            } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                 player2Pane.setStyle("-fx-background-color: #6D9DD5");
                 player1Pane.setStyle("-fx-background-color: #FFFFFF");
             }

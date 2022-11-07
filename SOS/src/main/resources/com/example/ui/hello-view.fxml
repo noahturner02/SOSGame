@@ -19,7 +19,7 @@
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <StackPane>
+            <StackPane fx:id="gridpaneParent">
                <children>
                   <GridPane fx:id="gameBoard" gridLinesVisible="true" prefHeight="300.0" prefWidth="300.0">
                     <columnConstraints>
