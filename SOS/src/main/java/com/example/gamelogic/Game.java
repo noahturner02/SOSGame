@@ -51,7 +51,7 @@ public abstract class Game {
         if (board.getCellByIndex(row, column).getStatus() == cellStatus.S) {
             // Find which directions that an SOS can extend from
             sosCells.add(board.getCellByIndex(row, column));
-            if ((row + 2) <= board.getGameGrid().size()) { // there are at least two spaces above the S
+            if ((row + 2) <= board.getGameGrid().size() - 1) { // there are at least two spaces above the S
                 if (board.getCellByIndex(row + 1, column).getStatus() == cellStatus.O) {
                     sosCells.add(board.getCellByIndex(row + 1, column));
                     if (board.getCellByIndex(row + 2, column).getStatus() == cellStatus.S) {
@@ -61,7 +61,7 @@ public abstract class Game {
                     }
                 }
             }
-            if (((row + 2) <= board.getGameGrid().size()) && ((column + 2) <= board.getGameGrid().size())) { // There are two spaces NE of the S
+            if (((row + 2) <= board.getGameGrid().size() - 1) && ((column + 2) <= board.getGameGrid().size() - 1)) { // There are two spaces NE of the S
                 if (board.getCellByIndex(row + 1, column + 1).getStatus() == cellStatus.O) {
                     sosCells.add(board.getCellByIndex(row + 1, column + 1));
                     if (board.getCellByIndex(row + 2, column + 2).getStatus() == cellStatus.S) {
@@ -71,7 +71,7 @@ public abstract class Game {
                     }
                 }
             }
-            if ((column + 2) <= board.getGameGrid().size()) { // There are two spaces E of the S
+            if ((column + 2) <= board.getGameGrid().size() - 1) { // There are two spaces E of the S
                 if (board.getCellByIndex(row, column + 1).getStatus() == cellStatus.O) {
                     sosCells.add(board.getCellByIndex(row, column + 1));
                     if (board.getCellByIndex(row, column + 2).getStatus() == cellStatus.S) {
@@ -81,7 +81,7 @@ public abstract class Game {
                     }
                 }
             }
-            if (((row - 2) >= 0) && ((column + 2) <= board.getGameGrid().size())) { // There are two spaces SE of the S
+            if (((row - 2) >= 0) && ((column + 2) <= board.getGameGrid().size() - 1)) { // There are two spaces SE of the S
                 if (board.getCellByIndex(row -1, column + 1).getStatus() == cellStatus.O) {
                     sosCells.add(board.getCellByIndex(row - 1, column + 1));
                     if (board.getCellByIndex(row -2, column + 2).getStatus() == cellStatus.S) {
@@ -121,7 +121,7 @@ public abstract class Game {
                     }
                 }
             }
-            if (((row + 2) <= board.getGameGrid().size()) && ((column - 2) >= 0)) {
+            if (((row + 2) <= board.getGameGrid().size() - 1) && ((column - 2) >= 0)) {
                 if (board.getCellByIndex(row + 1, column - 1).getStatus() == cellStatus.O) {
                     sosCells.add(board.getCellByIndex(row + 1, column - 1));
                     if (board.getCellByIndex(row +2, column -2).getStatus() == cellStatus.S) {
@@ -131,7 +131,58 @@ public abstract class Game {
                     }
                 }
             }
+        } else if (board.getCellByIndex(row, column).getStatus() == cellStatus.O) {
+            if ((row + 1) <= board.getGameGrid().size() - 1) {
+                if ((row - 1) >= 0) { // There are squares above and below the O
+                    if (board.getCellByIndex(row + 1, column).getStatus() == cellStatus.S) {
+                        sosCells.add(board.getCellByIndex(row + 1, column));
+                        if (board.getCellByIndex(row -1, column).getStatus() == cellStatus.S) {
+                            sosCells.add(board.getCellByIndex(row - 1, column));
+                            System.out.println("Vertical SOS with O");
+                            return sosCells;
+                        }
+                    }
+                }
+            }
+            if (((row + 1) <= board.getGameGrid().size() - 1) && ((column + 1) <= board.getGameGrid().size() - 1)) {
+                if (((row - 1) >= 0) && ((column - 1) >= 0)) { // There are squares in the \ diagonal
+                    if (board.getCellByIndex(row + 1, column + 1).getStatus() == cellStatus.S) {
+                        sosCells.add(board.getCellByIndex(row + 1, column + 1));
+                        if (board.getCellByIndex(row - 1, column - 1).getStatus() == cellStatus.S) {
+                            sosCells.add(board.getCellByIndex(row - 1, column - 1));
+                            System.out.println("\\ SOS with O");
+                            return sosCells;
+                        }
+                    }
+                }
+            }
+            if ((column + 1) <= board.getGameGrid().size() - 1) {
+                if ((column - 1) >= 0) { // There are squares left and right of the O
+                    if (board.getCellByIndex(row, column + 1).getStatus() == cellStatus.S) {
+                        sosCells.add(board.getCellByIndex(row, column + 1));
+                        if (board.getCellByIndex(row, column - 1).getStatus() == cellStatus.S) {
+                            sosCells.add(board.getCellByIndex(row, column - 1));
+                            System.out.println("Horizontal SOS with O");
+                            return sosCells;
+                        }
+                    }
+                }
+            }
+            if (((row + 1) <= board.getGameGrid().size() - 1) && ((column - 1) >= 0)) {
+                if (((row - 1) >= 0) && ((column + 1) <= board.getGameGrid().size() - 1)) { // There are squares in the / diagonal
+                    if (board.getCellByIndex(row + 1, column - 1).getStatus() == cellStatus.S) {
+                        sosCells.add(board.getCellByIndex(row + 1, column -1));
+                        if (board.getCellByIndex(row - 1, column + 1).getStatus() == cellStatus.S) {
+                            sosCells.add(board.getCellByIndex(row - 1, column + 1));
+                            System.out.println("/ SOS with O");
+                            return sosCells;
+                        }
+                    }
+                }
+            }
+
         }
+
         return sosCells;
     }
 }
