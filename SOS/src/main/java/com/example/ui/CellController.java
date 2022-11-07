@@ -166,8 +166,9 @@ public class CellController {
                     double endX = endCell.getLayoutX();
                     double endY = endCell.getLayoutY();
                     gridpaneParent.getChildren().add(new Line(startX, startY, endX, endY));
-                    SOSList.remove(1);
-                    SOSList.remove(1);
+                    SOSList.remove(0);
+                    SOSList.remove(0);
+                    SOSList.remove(0);
                     System.out.println("Line created: " + startX + " " + startY + " " + endX + " " + endY);
                 }
             }
