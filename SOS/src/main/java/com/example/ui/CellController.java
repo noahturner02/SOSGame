@@ -127,18 +127,18 @@ public class CellController {
                     else if (game.getPlayer1PieceSelected() == SelectedPiece.O) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
+                    game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
                     game.setPlayerTurn(PlayerTurn.PLAYER2);
                 }
                 else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                     if (game.getPlayer2PieceSelected() == SelectedPiece.S) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
-                    }
-                    else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
+                    } else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
+                    game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
                     game.setPlayerTurn(PlayerTurn.PLAYER1);
                 }
-                game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
             }
 
             // UI control

@@ -54,7 +54,7 @@ public abstract class Game {
             if ((row + 2) <= board.getGameGrid().size()) { // there are at least two spaces above the S
                 if (board.getCellByIndex(row + 1, column).getStatus() == cellStatus.O) {
                     sosCells.add(board.getCellByIndex(row + 1, column));
-                    if (board.getCellByIndex((row + 2), column).getStatus() == cellStatus.S) {
+                    if (board.getCellByIndex(row + 2, column).getStatus() == cellStatus.S) {
                         sosCells.add(board.getCellByIndex(row + 2, column));
                         System.out.println("SOS North of S");
                         return sosCells;
