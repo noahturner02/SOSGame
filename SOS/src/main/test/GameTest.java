@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GameTest {
     @Test
@@ -72,6 +73,48 @@ public class GameTest {
         Assertions.assertEquals(cellStatus.O, g.board.getCellByIndex(0, 0).getStatus());
     }
 
+    @Test
+    @DisplayName("Register SOS w/ S Placement")
+    void SOS_S() {
+        Game g = new SimpleGame(3);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
+        g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
+        List<Coordinate> SOS = g.checkForSOS(0, 2);
+        Assertions.assertEquals(g.board.getCellByIndex(SOS.get(0).getX(), SOS.get(0).getY()).getStatus(), cellStatus.S);
+        Assertions.assertEquals(g.board.getCellByIndex(SOS.get(1).getX(), SOS.get(1).getY()).getStatus(), cellStatus.O);
+        Assertions.assertEquals(g.board.getCellByIndex(SOS.get(2).getX(), SOS.get(2).getY()).getStatus(), cellStatus.S);
+    }
+
+    @Test
+    @DisplayName("Register SOS w/ O Placement")
+    void SOS_O() {
+        Game g = new SimpleGame(3);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
+        g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
+        List<Coordinate> SOS = g.checkForSOS(0, 1);
+        Assertions.assertEquals(g.board.getCellByIndex(SOS.get(0).getX(), SOS.get(0).getY()).getStatus(), cellStatus.S);
+        Assertions.assertEquals(g.board.getCellByIndex(SOS.get(1).getX(), SOS.get(1).getY()).getStatus(), cellStatus.O);
+        Assertions.assertEquals(g.board.getCellByIndex(SOS.get(2).getX(), SOS.get(2).getY()).getStatus(), cellStatus.S);
+    }
+
+    @Test
+    @DisplayName("Multiple SOS' with one move")
+    void mult_SOS() {
+        GeneralGame g = new GeneralGame(3);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 1).setStatus(cellStatus.O);
+        List<Coordinate> SOS = g.checkForSOS(1, 1);
+        Assertions.assertEquals(g.player2Points, 4);
+    }
 
 
 
