@@ -21,6 +21,15 @@ public class GeneralGame extends Game{
         }
         if (super.board.isFull()) {
             super.setGameFinished(true);
+            if (player1Points > player2Points) {
+                winner = Winner.PLAYER1;
+            }
+            else if (player2Points > player1Points) {
+                winner = Winner.PLAYER2;
+            }
+            else {
+                winner = Winner.DRAW;
+            }
         }
         else {
             super.setGameFinished(false);

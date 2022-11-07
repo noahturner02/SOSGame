@@ -11,6 +11,7 @@ public abstract class Game {
     private SelectedPiece player1PieceSelected = SelectedPiece.S;
     private SelectedPiece player2PieceSelected = SelectedPiece.S;
     public GameBoard board;
+    public Winner winner = null;
 
     public Game(GameMode gameMode, int gameSize) {
         this.gameMode = gameMode;

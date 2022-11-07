@@ -4,8 +4,10 @@ import com.example.gamelogic.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -15,7 +17,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,13 +54,24 @@ public class CellController {
 
 
 
-    private Game game = new SimpleGame(3);
+    static Game game = new SimpleGame(3);
 
     private void winDisplay() {
         ObservableList<Node> childrenList = gameBoard.getChildren();
         for (Node node : childrenList) {
             node.setOnMouseClicked(null);
         }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CellController.class.getResource("win-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 350, 500);
+            Stage stage = new Stage();
+            stage.setTitle("Game Over");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private StackPane getChildFromGridPaneByRowAndColumn(int row, int column) {
@@ -165,7 +180,6 @@ public class CellController {
                     } else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
-                    game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
                     game.setPlayerTurn(PlayerTurn.PLAYER1);
                 }
                 SOSList = game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));

@@ -15,6 +15,16 @@ public class SimpleGame extends Game{
         }
         else {
             super.setGameFinished(true);
+            if (getPlayerTurn() == PlayerTurn.PLAYER1) {
+                winner = Winner.PLAYER2;
+            }
+            else if (getPlayerTurn() == PlayerTurn.PLAYER2) {
+                winner = Winner.PLAYER1;
+            }
+        }
+        if (board.isFull()) {
+            setGameFinished(true);
+            winner = Winner.DRAW;
         }
         return sosList;
     }
