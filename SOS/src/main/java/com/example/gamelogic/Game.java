@@ -57,7 +57,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row + 2, column).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row + 2, column));
                         System.out.println("SOS North of S");
-                        return sosCells;
                     }
                 }
             }
@@ -67,7 +66,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row + 2, column + 2).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row + 2, column + 2));
                         System.out.println("SOS NE of S");
-                        return sosCells;
                     }
                 }
             }
@@ -77,7 +75,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row, column + 2).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row, column + 2));
                         System.out.println("SOS E of S");
-                        return sosCells;
                     }
                 }
             }
@@ -87,7 +84,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row -2, column + 2).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row - 2, column + 2));
                         System.out.println("SOS SE of S");
-                        return sosCells;
                     }
                 }
             }
@@ -97,7 +93,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row -2, column).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row - 2, column));
                         System.out.println("SOS South of the S");
-                        return sosCells;
                     }
                 }
             }
@@ -107,7 +102,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row-2, column -2).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row - 2, column - 2));
                         System.out.println("SOS SW of the S");
-                        return sosCells;
                     }
                 }
             }
@@ -117,7 +111,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row, column-2).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row, column - 2));
                         System.out.println("SOS W of the S");
-                        return sosCells;
                     }
                 }
             }
@@ -127,7 +120,6 @@ public abstract class Game {
                     if (board.getCellByIndex(row +2, column -2).getStatus() == cellStatus.S) {
                         sosCells.add(new Coordinate(row + 2, column - 2));
                         System.out.println("SOS NW of S");
-                        return sosCells;
                     }
                 }
             }
@@ -140,7 +132,6 @@ public abstract class Game {
                         if (board.getCellByIndex(row -1, column).getStatus() == cellStatus.S) {
                             sosCells.add(new Coordinate(row - 1, column));
                             System.out.println("Vertical SOS with O");
-                            return sosCells;
                         }
                     }
                 }
@@ -152,7 +143,6 @@ public abstract class Game {
                         if (board.getCellByIndex(row - 1, column - 1).getStatus() == cellStatus.S) {
                             sosCells.add(new Coordinate(row - 1, column - 1));
                             System.out.println("\\ SOS with O");
-                            return sosCells;
                         }
                     }
                 }
@@ -164,7 +154,6 @@ public abstract class Game {
                         if (board.getCellByIndex(row, column - 1).getStatus() == cellStatus.S) {
                             sosCells.add(new Coordinate(row, column - 1));
                             System.out.println("Horizontal SOS with O");
-                            return sosCells;
                         }
                     }
                 }
@@ -176,7 +165,6 @@ public abstract class Game {
                         if (board.getCellByIndex(row - 1, column + 1).getStatus() == cellStatus.S) {
                             sosCells.add(new Coordinate(row - 1, column + 1));
                             System.out.println("/ SOS with O");
-                            return sosCells;
                         }
                     }
                 }
