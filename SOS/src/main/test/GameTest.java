@@ -74,8 +74,8 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("Register SOS w/ S Placement")
-    void SOS_S() {
+    @DisplayName("Register an SOS on simple")
+    void SOS_simple() {
         Game g = new SimpleGame(3);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
@@ -87,9 +87,9 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("Register SOS w/ O Placement")
-    void SOS_O() {
-        Game g = new SimpleGame(3);
+    @DisplayName("Register an SOS on General")
+    void SOS_General() {
+        Game g = new GeneralGame(3);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
@@ -116,6 +116,75 @@ public class GameTest {
         Assertions.assertEquals(g.player2Points, 4);
     }
 
+    @Test
+    @DisplayName("A Simple Game ends in a win")
+    void simpleWin() {
+        SimpleGame g = new SimpleGame(3);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
+        g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
+        g.checkForSOS(0, 0);
+        Assertions.assertEquals(g.getGameFinished(), true);
+        Assertions.assertEquals(g.winner, Winner.PLAYER2);
+    }
+
+    @Test
+    @DisplayName("A Simple Game ends in a draw")
+    void simpleDraw() {
+        SimpleGame g = new SimpleGame(3);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 2).setStatus(cellStatus.S);
+        g.checkForSOS(0, 0);
+        Assertions.assertEquals(g.getGameFinished(), true);
+        Assertions.assertEquals(g.winner, Winner.DRAW);
+    }
+
+    @Test
+    @DisplayName("A General Game ends in a win")
+    void generalWin() {
+        GeneralGame g = new GeneralGame(3);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 0).setStatus(cellStatus.O);
+        g.checkForSOS(1, 0);
+        Assertions.assertEquals(g.getGameFinished(), false);
+        g.board.getCellByIndex(1, 1).setStatus(cellStatus.O);
+        g.checkForSOS(1, 1);
+        Assertions.assertEquals(g.getGameFinished(), false);
+        g.board.getCellByIndex(1, 2).setStatus(cellStatus.O);
+        g.checkForSOS(1, 2);
+        Assertions.assertEquals(g.getGameFinished(), true);
+        Assertions.assertEquals(g.winner, Winner.PLAYER2);
+    }
+
+    @Test
+    @DisplayName("A General Game ends in a draw")
+    void generalDraw() {
+        GeneralGame g = new GeneralGame(3);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(1, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 1).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 2).setStatus(cellStatus.S);
+        g.checkForSOS(0, 0);
+        Assertions.assertEquals(g.getGameFinished(), true);
+        Assertions.assertEquals(g.winner, Winner.DRAW);
+    }
 
 
 
