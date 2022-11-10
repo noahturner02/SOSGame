@@ -51,8 +51,14 @@ public class CellController {
     RadioButton player2S;
     @FXML
     RadioButton player2O;
-
-
+    @FXML
+    RadioButton player1HumanButton;
+    @FXML
+    RadioButton player1ComputerButton;
+    @FXML
+    RadioButton player2HumanButton;
+    @FXML
+    RadioButton player2ComputerButton;
 
     static Game game = new SimpleGame(3);
 

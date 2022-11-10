@@ -97,16 +97,35 @@
                            <StackPane.margin>
                               <Insets bottom="50.0" />
                            </StackPane.margin></Label>
-                        <RadioButton fx:id="player1S" mnemonicParsing="false" selected="true" text="S">
+                        <RadioButton fx:id="player1S" alignment="CENTER_LEFT" mnemonicParsing="false" selected="true" text="S" StackPane.alignment="CENTER">
                            <toggleGroup>
                               <ToggleGroup fx:id="player1Group" />
-                           </toggleGroup></RadioButton>
-                        <RadioButton fx:id="player1O" mnemonicParsing="false" text="O" toggleGroup="$player1Group">
+                           </toggleGroup>
                            <StackPane.margin>
-                              <Insets bottom="-40.0" />
+                              <Insets left="100.0" />
+                           </StackPane.margin></RadioButton>
+                        <RadioButton fx:id="player1O" alignment="CENTER_LEFT" mnemonicParsing="false" text="O" toggleGroup="$player1Group" StackPane.alignment="CENTER">
+                           <StackPane.margin>
+                              <Insets bottom="-40.0" left="103.0" />
                            </StackPane.margin>
                         </RadioButton>
-                     </children></StackPane>
+                        <RadioButton fx:id="player1HumanButton" alignment="CENTER_LEFT" mnemonicParsing="false" selected="true" text="Human" StackPane.alignment="CENTER">
+                           <StackPane.margin>
+                              <Insets right="100.0" />
+                           </StackPane.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="player1TypeGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="player1ComputerButton" alignment="CENTER_LEFT" mnemonicParsing="false" text="Computer" toggleGroup="$player1TypeGroup" StackPane.alignment="CENTER">
+                           <StackPane.margin>
+                              <Insets bottom="-40.0" right="85.0" />
+                           </StackPane.margin>
+                        </RadioButton>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></StackPane>
                   <StackPane fx:id="player2Pane" prefHeight="150.0" prefWidth="200.0">
                      <children>
                         <Label text="Player 2">
@@ -116,10 +135,26 @@
                         <RadioButton fx:id="player2S" mnemonicParsing="false" selected="true" text="S">
                            <toggleGroup>
                               <ToggleGroup fx:id="player2Group" />
-                           </toggleGroup></RadioButton>
+                           </toggleGroup>
+                           <StackPane.margin>
+                              <Insets left="100.0" />
+                           </StackPane.margin></RadioButton>
                         <RadioButton fx:id="player2O" mnemonicParsing="false" text="O" toggleGroup="$player2Group">
                            <StackPane.margin>
-                              <Insets bottom="-40.0" />
+                              <Insets bottom="-40.0" left="103.0" />
+                           </StackPane.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="player2ComputerButton" mnemonicParsing="false" text="Computer" StackPane.alignment="CENTER">
+                           <StackPane.margin>
+                              <Insets bottom="-40.0" right="85.0" />
+                           </StackPane.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="player2TypeGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="player2HumanButton" mnemonicParsing="false" selected="true" text="Human" toggleGroup="$player2TypeGroup" StackPane.alignment="CENTER">
+                           <StackPane.margin>
+                              <Insets right="100.0" />
                            </StackPane.margin>
                         </RadioButton>
                      </children></StackPane>
