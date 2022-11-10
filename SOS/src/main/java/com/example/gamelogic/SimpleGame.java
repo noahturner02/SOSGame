@@ -4,8 +4,8 @@ import java.util.List;
 
 public class SimpleGame extends Game{
 
-    public SimpleGame(int gameSize) {
-        super(GameMode.SIMPLE, gameSize);
+    public SimpleGame(int gameSize, PlayerType player1Type, PlayerType player2Type) {
+        super(GameMode.SIMPLE, gameSize, player1Type, player2Type);
     }
     @Override
     public List<Coordinate> checkForSOS(int row, int column) {

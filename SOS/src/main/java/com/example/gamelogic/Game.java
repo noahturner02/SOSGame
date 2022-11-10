@@ -12,10 +12,14 @@ public abstract class Game {
     private SelectedPiece player2PieceSelected = SelectedPiece.S;
     public GameBoard board;
     public Winner winner = null;
+    public PlayerType player1Type;
+    public PlayerType player2Type;
 
-    public Game(GameMode gameMode, int gameSize) {
+    public Game(GameMode gameMode, int gameSize, PlayerType player1Type, PlayerType player2Type) {
         this.gameMode = gameMode;
         this.gameSize = gameSize;
+        this.player1Type = player1Type;
+        this.player2Type = player2Type;
         playerTurn = PlayerTurn.PLAYER1;
         gameFinished = false;
         board = new GameBoard(gameSize);

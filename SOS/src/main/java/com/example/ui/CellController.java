@@ -60,7 +60,7 @@ public class CellController {
     @FXML
     RadioButton player2ComputerButton;
 
-    static Game game = new SimpleGame(3);
+    static Game game = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
 
     private void winDisplay() {
         ObservableList<Node> childrenList = gameBoard.getChildren();
@@ -98,11 +98,25 @@ public class CellController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("new game'd");
+                PlayerType player1Type = null;
+                PlayerType player2Type = null;
+                if (player1HumanButton.isSelected()) {
+                    player1Type = PlayerType.HUMAN;
+                }
+                else if (player1ComputerButton.isSelected()) {
+                    player1Type = PlayerType.COMPUTER;
+                }
+                if (player2HumanButton.isSelected()) {
+                    player2Type = PlayerType.HUMAN;
+                }
+                else if (player2ComputerButton.isSelected()) {
+                    player2Type = PlayerType.COMPUTER;
+                }
                 if (simpleGame.isSelected()) {
-                    game = new SimpleGame(getSliderSize());
+                    game = new SimpleGame(getSliderSize(), player1Type, player2Type);
                 }
                 else {
-                    game = new GeneralGame(getSliderSize());
+                    game = new GeneralGame(getSliderSize(), player1Type, player2Type);
                 }
                 resizeBoard(getSliderSize());
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
