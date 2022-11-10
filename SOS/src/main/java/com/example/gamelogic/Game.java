@@ -52,6 +52,7 @@ public abstract class Game {
         return gameMode;
     }
     public boolean getGameFinished() { return gameFinished; }
+    abstract public void computerMove();
     public List<Coordinate> checkForSOS(int row, int column) { // row and column of last placed item
         List<Coordinate> sosCells = new ArrayList<>();
         if (board.getCellByIndex(row, column).getStatus() == cellStatus.S) {

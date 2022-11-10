@@ -28,4 +28,8 @@ public class SimpleGame extends Game{
         }
         return sosList;
     }
+    @Override
+    public void computerMove() {
+
+    }
 }

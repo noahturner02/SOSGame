@@ -36,4 +36,8 @@ public class GeneralGame extends Game{
         }
         return sosList;
     }
+    @Override
+    public void computerMove() {
+        
+    }
 }
