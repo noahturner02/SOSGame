@@ -1,5 +1,6 @@
 package com.example.gamelogic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralGame extends Game{
@@ -37,7 +38,7 @@ public class GeneralGame extends Game{
         return sosList;
     }
     @Override
-    public void computerMove() {
-
+    public Coordinate computerMove() {
+        return new Coordinate(-1, -1);
     }
 }

@@ -186,6 +186,7 @@ public class CellController {
 
             // Processing click in game logic
             List<Coordinate> SOSList = new ArrayList<>();
+            Coordinate c;
             if (game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).getStatus() == cellStatus.EMPTY) {
                 if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
                     if (game.getPlayer1PieceSelected() == SelectedPiece.S) {
@@ -194,6 +195,17 @@ public class CellController {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
                     game.setPlayerTurn(PlayerTurn.PLAYER2);
+                    if (game.player2Type == PlayerType.COMPUTER) {
+                        c = game.computerMove();
+                        switch (game.board.getCellByIndex(c.getX(), c.getY()).getStatus()) {
+                            case S:
+                                childrenList.get(0).setVisible(true);
+                                break;
+                            case O:
+                                childrenList.get(1).setVisible(true);
+                                break;
+                        }
+                    }
                 } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                     if (game.getPlayer2PieceSelected() == SelectedPiece.S) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
@@ -201,6 +213,17 @@ public class CellController {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
                     game.setPlayerTurn(PlayerTurn.PLAYER1);
+                    if (game.player1Type == PlayerType.COMPUTER) {
+                        c = game.computerMove();
+                        switch (game.board.getCellByIndex(c.getX(), c.getY()).getStatus()) {
+                            case S:
+                                childrenList.get(0).setVisible(true);
+                                break;
+                            case O:
+                                childrenList.get(1).setVisible(true);
+                                break;
+                        }
+                    }
                 }
                 SOSList = game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
             }
