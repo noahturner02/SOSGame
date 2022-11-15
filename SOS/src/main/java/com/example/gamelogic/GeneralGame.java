@@ -38,6 +38,6 @@ public class GeneralGame extends Game{
     }
     @Override
     public void computerMove() {
-        
+
     }
 }
