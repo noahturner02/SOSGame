@@ -123,6 +123,57 @@ public class SimpleGame extends Game{
                 }
             }
         }
+
+        if (c == null) {
+            for (int i = 0; i < board.getGameGrid().size(); i++) {
+                for (int j = 0; j < board.getGameGrid().size(); j++) {
+                    if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
+                        if ((i + 1) <= board.getGameGrid().size() - 1) {
+                            if ((i - 1) >= 0) {
+                                if (board.getCellByIndex(i + 1, j).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i - 1, j).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (((i + 1) <= board.getGameGrid().size() - 1) && ((j + 1) <= board.getGameGrid().size() - 1)) {
+                            if (((i - 1) >= 0) && ((j - 1) >= 0)) {
+                                if (board.getCellByIndex(i + 1, j + 1).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i - 1, j - 1).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        if ((j + 1) <= board.getGameGrid().size() - 1) {
+                            if ((j - 1) >= 0) {
+                                if (board.getCellByIndex(i, j + 1).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i, j - 1).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (((i + 1) <= board.getGameGrid().size() - 1) && ((j - 1) >= 0)) {
+                            if (((i - 1) >= 0) && ((j + 1) <= board.getGameGrid().size() - 1)) {
+                                if (board.getCellByIndex(i + 1, j - 1).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i - 1, j + 1).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        board.getCellByIndex(i, j).setStatus(cellStatus.O);
+                        return new Coordinate(i, j);
+                    }
+                }
+            }
+        }
         if (c == null) {
             for (int i = 0; i < board.getGameGrid().size(); i++) {
                 for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
