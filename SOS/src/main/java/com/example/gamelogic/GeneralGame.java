@@ -14,9 +14,9 @@ public class GeneralGame extends Game{
         List<Coordinate> sosList = super.checkForSOS(row, column);
         if (!sosList.isEmpty()) {
             if (getPlayerTurn() == PlayerTurn.PLAYER1) {
-                player2Points += sosList.size() / 3;
-            } else if (getPlayerTurn() == PlayerTurn.PLAYER2) {
                 player1Points += sosList.size() / 3;
+            } else if (getPlayerTurn() == PlayerTurn.PLAYER2) {
+                player2Points += sosList.size() / 3;
             }
             System.out.println("Player 1: " + player1Points + "\nPlayer 2: " + player2Points);
         }
@@ -39,29 +39,27 @@ public class GeneralGame extends Game{
     }
     @Override
     public Coordinate computerMove() {
-        cellStatus SOSToken = cellStatus.S;
         Coordinate c = null;
         int maxSOSSize = 0;
-        Game testGame = (Game) this;
         System.out.println("Computer makin' a move!");
         for (int i = 0; i < board.getGameGrid().size(); i++) {
             for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                 if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
-                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.S);
-                    if (testGame.checkForSOS(i, j).size() > maxSOSSize) {
+                    board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                    if (super.checkForSOS(i, j).size() > maxSOSSize) {
                         System.out.println("Computer has spotted SOS");
                         c = new Coordinate(i, j);
-                        maxSOSSize = testGame.checkForSOS(i, j).size();
-                        SOSToken = cellStatus.S;
+                        maxSOSSize = super.checkForSOS(i, j).size();
+                        computerSelectedPiece = cellStatus.S;
                     }
-                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.O);
-                    if (testGame.checkForSOS(i, j).size() > maxSOSSize) {
+                    board.getCellByIndex(i, j).setStatus(cellStatus.O);
+                    if (super.checkForSOS(i, j).size() > maxSOSSize) {
                         System.out.println("Computer has spotted SOS");
                         c = new Coordinate(i, j);
-                        maxSOSSize = testGame.checkForSOS(i, j).size();
-                        SOSToken = cellStatus.O;
+                        maxSOSSize = super.checkForSOS(i, j).size();
+                        computerSelectedPiece = cellStatus.O;
                     }
-                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.EMPTY);
+                    board.getCellByIndex(i, j).setStatus(cellStatus.EMPTY);
                 }
             }
         }
@@ -198,9 +196,23 @@ public class GeneralGame extends Game{
             }
         }
         if (c != null) {
-            board.getCellByIndex(c.getX(), c.getY()).setStatus(SOSToken);
+            board.getCellByIndex(c.getX(), c.getY()).setStatus(computerSelectedPiece);
+            if (computerSelectedPiece == cellStatus.S) {
+                computerSelectedPiece = cellStatus.O;
+            } else {
+                computerSelectedPiece = cellStatus.S;
+            }
         }
         else {
+            setGameFinished(true);
+            if (player1Points > player2Points) {
+                winner = Winner.PLAYER1;
+            } else if (player2Points > player1Points) {
+                winner = Winner.PLAYER2;
+            }
+            else {
+                winner = Winner.DRAW;
+            }
             return new Coordinate(-1, -1);
         }
         return c;

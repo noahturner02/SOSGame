@@ -73,6 +73,8 @@ public class CellController {
                 game.setPlayerTurn(PlayerTurn.PLAYER2);
                 if ((game.player2Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
                     handleComputerMove();
+                } else if (game.getGameFinished()) {
+                    winDisplay();
                 }
             }
         }
@@ -85,6 +87,8 @@ public class CellController {
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
                 if ((game.player1Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
                     handleComputerMove();
+                } else if (game.getGameFinished()) {
+                    winDisplay();
                 }
             }
         }

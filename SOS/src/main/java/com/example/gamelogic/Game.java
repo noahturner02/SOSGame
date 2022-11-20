@@ -14,6 +14,7 @@ public abstract class Game {
     public Winner winner = null;
     public PlayerType player1Type;
     public PlayerType player2Type;
+    public cellStatus computerSelectedPiece;
 
     public Game(GameMode gameMode, int gameSize, PlayerType player1Type, PlayerType player2Type) {
         this.gameMode = gameMode;

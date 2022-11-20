@@ -30,24 +30,23 @@ public class SimpleGame extends Game{
     @Override
     public Coordinate computerMove() {
         Coordinate c = null;
-        Game testGame = (Game) this;
         System.out.println("Computer makin' a move!");
         for (int i = 0; i < board.getGameGrid().size(); i++) {
             for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                 if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
-                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.S);
-                    if (!testGame.checkForSOS(i, j).isEmpty()) {
+                    board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                    if (!super.checkForSOS(i, j).isEmpty()) {
                         System.out.println("Computer has spotted SOS");
                         board.getCellByIndex(i, j).setStatus(cellStatus.S);
                         return new Coordinate(i, j);
                     }
-                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.O);
-                    if (!testGame.checkForSOS(i, j).isEmpty()) {
+                    board.getCellByIndex(i, j).setStatus(cellStatus.O);
+                    if (!super.checkForSOS(i, j).isEmpty()) {
                         System.out.println("Computer has spotted SOS");
                         board.getCellByIndex(i, j).setStatus(cellStatus.O);
                         return new Coordinate(i, j);
                     }
-                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.EMPTY);
+                    board.getCellByIndex(i, j).setStatus(cellStatus.EMPTY);
                 }
             }
         }
@@ -184,9 +183,16 @@ public class SimpleGame extends Game{
             }
         }
         if (c != null) {
-            board.getCellByIndex(c.getX(), c.getY()).setStatus(cellStatus.S);
+            board.getCellByIndex(c.getX(), c.getY()).setStatus(computerSelectedPiece);
+            if (computerSelectedPiece == cellStatus.S) {
+                computerSelectedPiece = cellStatus.O;
+            } else {
+                computerSelectedPiece = cellStatus.S;
+            }
         }
         else {
+            setGameFinished(true);
+            winner = Winner.DRAW;
             return new Coordinate(-1, -1);
         }
         return c;
