@@ -53,6 +53,78 @@ public class SimpleGame extends Game{
         }
         if (c == null) {
             for (int i = 0; i < board.getGameGrid().size(); i++) {
+                for (int j = 0; j < board.getGameGrid().size(); j++) {
+                    if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
+                        if ((i + 2) <= board.getGameGrid().size() - 1) {
+                            if (board.getCellByIndex(i + 1, j).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i + 2, j).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if (((i + 2) <= board.getGameGrid().size() - 1) && ((j + 2) <= board.getGameGrid().size() - 1)) {
+                            if (board.getCellByIndex(i + 1, j + 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i + 2, j + 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if ((j + 2) <= board.getGameGrid().size() - 1) {
+                            if (board.getCellByIndex(i, j + 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i, j + 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if (((i - 2) >= 0) && ((j + 2) <= board.getGameGrid().size() - 1)) {
+                           if (board.getCellByIndex(i - 1, j + 1).getStatus() == cellStatus.O) {
+                               if (board.getCellByIndex(i - 2, j + 2).getStatus() == cellStatus.EMPTY) {
+                                   continue;
+                               }
+                           }
+                        }
+
+                        if ((i - 2) >= 0) {
+                            if (board.getCellByIndex(i - 1, j).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i - 2, j).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if (((i - 2) >= 0) && ((j - 2) >= 0)) {
+                            if (board.getCellByIndex(i - 1, j - 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i - 2, j - 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if ((j - 2) >= 0) {
+                            if (board.getCellByIndex(i, j - 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i, j - 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+                        if (((i + 2) <= board.getGameGrid().size() - 1) && ((j - 2) >= 0)) {
+                            if (board.getCellByIndex(i + 1, j - 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i + 2, j - 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+                        board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                        return new Coordinate(i, j);
+                    }
+                }
+            }
+        }
+        if (c == null) {
+            for (int i = 0; i < board.getGameGrid().size(); i++) {
                 for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                     if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
                         board.getCellByIndex(i, j).setStatus(cellStatus.S);
