@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -113,7 +114,7 @@ public class GameTest {
         g.board.getCellByIndex(2, 1).setStatus(cellStatus.S);
         g.board.getCellByIndex(1, 1).setStatus(cellStatus.O);
         List<Coordinate> SOS = g.checkForSOS(1, 1);
-        Assertions.assertEquals(g.player2Points, 4);
+        Assertions.assertEquals(g.player1Points, 4);
     }
 
     @Test
@@ -125,7 +126,7 @@ public class GameTest {
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
         g.checkForSOS(0, 0);
         Assertions.assertEquals(g.getGameFinished(), true);
-        Assertions.assertEquals(g.winner, Winner.PLAYER2);
+        Assertions.assertEquals(g.winner, Winner.PLAYER1);
     }
 
     @Test
@@ -165,7 +166,7 @@ public class GameTest {
         g.board.getCellByIndex(1, 2).setStatus(cellStatus.O);
         g.checkForSOS(1, 2);
         Assertions.assertEquals(g.getGameFinished(), true);
-        Assertions.assertEquals(g.winner, Winner.PLAYER2);
+        Assertions.assertEquals(g.winner, Winner.PLAYER1);
     }
 
     @Test
@@ -185,6 +186,47 @@ public class GameTest {
         Assertions.assertEquals(g.getGameFinished(), true);
         Assertions.assertEquals(g.winner, Winner.DRAW);
     }
+
+    @Test
+    @DisplayName("AC 8.3")
+    void AC8_3() {
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.COMPUTER);
+        g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
+        Coordinate c = g.computerMove();
+        Assertions.assertEquals(c.getX(), 0);
+        Assertions.assertEquals(c.getY(), 2);
+    }
+
+    @Test
+    @DisplayName("AC 8.4")
+    void AC8_4() {
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.COMPUTER);
+        g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
+        Coordinate c = g.computerMove();
+        Assertions.assertEquals(c.getX(), 1);
+        Assertions.assertEquals(c.getY(), 0);
+    }
+
+    @Test
+    @DisplayName("AC 8.5")
+    void AC8_5() {
+        Game g = new GeneralGame(5, PlayerType.HUMAN, PlayerType.COMPUTER);
+        g.board.getCellByIndex(1, 0).setStatus(cellStatus.O);
+        g.board.getCellByIndex(2, 0).setStatus(cellStatus.S);
+        g.board.getCellByIndex(4, 4).setStatus(cellStatus.S);
+        g.board.getCellByIndex(3, 4).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 4).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 3).setStatus(cellStatus.S);
+        g.board.getCellByIndex(2, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(3, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(4, 2).setStatus(cellStatus.S);
+        g.board.getCellByIndex(4, 3).setStatus(cellStatus.S);
+        Coordinate c = g.computerMove();
+        Assertions.assertEquals(c.getY(), 3);
+        Assertions.assertEquals(c.getX(), 3);
+    }
+
 
 
 
