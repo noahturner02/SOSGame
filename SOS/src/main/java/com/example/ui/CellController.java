@@ -125,11 +125,11 @@ public class CellController {
                 break;
         }
         if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
-            player2Pane.setStyle("-fx-background-color: #FFFFFF");
-            player1Pane.setStyle("-fx-background-color: #6D9DD5");
-        } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
             player2Pane.setStyle("-fx-background-color: #CC4B23");
             player1Pane.setStyle("-fx-background-color: #FFFFFF");
+        } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+            player2Pane.setStyle("-fx-background-color: #FFFFFF");
+            player1Pane.setStyle("-fx-background-color: #6D9DD5");
         }
     }
 
