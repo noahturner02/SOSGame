@@ -68,7 +68,6 @@ public class CellController {
             if (game.player1Type == PlayerType.COMPUTER) {
                 c = game.computerMove();
                 if (c.getX() != -1) {
-                    getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
                     onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
                 }
                 game.setPlayerTurn(PlayerTurn.PLAYER2);
@@ -81,7 +80,6 @@ public class CellController {
             if (game.player2Type == PlayerType.COMPUTER) {
                 c = game.computerMove();
                 if (c.getX() != -1) {
-                    getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
                     onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
                 }
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
@@ -228,6 +226,9 @@ public class CellController {
                 game.setPlayer2PieceSelected(SelectedPiece.S);
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
+                if (player1Type == PlayerType.COMPUTER) {
+                    handleComputerMove();
+                }
             }
         });
     }
