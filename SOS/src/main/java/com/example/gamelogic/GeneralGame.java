@@ -38,7 +38,7 @@ public class GeneralGame extends Game{
         return sosList;
     }
     @Override
-    public Coordinate computerMove() {
+    public Coordinate computerMove() throws NullPointerException{
         return new Coordinate(-1, -1);
     }
 }

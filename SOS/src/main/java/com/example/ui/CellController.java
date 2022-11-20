@@ -194,16 +194,40 @@ public class CellController {
                     } else if (game.getPlayer1PieceSelected() == SelectedPiece.O) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
+                    SOSList =  game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
                     game.setPlayerTurn(PlayerTurn.PLAYER2);
                     if (game.player2Type == PlayerType.COMPUTER) {
                         c = game.computerMove();
-                        switch (game.board.getCellByIndex(c.getX(), c.getY()).getStatus()) {
-                            case S:
-                                childrenList.get(0).setVisible(true);
-                                break;
-                            case O:
-                                childrenList.get(1).setVisible(true);
-                                break;
+                        if (c.getX() != -1) {
+                            getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
+                            List<Coordinate> computerSOSList = game.checkForSOS(c.getX(), c.getY());
+                            if (!computerSOSList.isEmpty()) {
+                                StackPane startCell = getChildFromGridPaneByRowAndColumn(computerSOSList.get(0).getX(), computerSOSList.get(0).getY());
+                                StackPane endCell = getChildFromGridPaneByRowAndColumn(computerSOSList.get(2).getX(), computerSOSList.get(2).getY());
+                                double startX = startCell.getLayoutX() + (startCell.getWidth() / 2);
+                                double startY = startCell.getLayoutY() + (startCell.getHeight() / 2);
+                                double endX = endCell.getLayoutX() + (startCell.getWidth() / 2);
+                                double endY = endCell.getLayoutY() + (startCell.getHeight() / 2);
+                                Line line = new Line(startX, startY, endX, endY);
+                                line.setStrokeWidth(5);
+                                if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+                                    line.setStyle("-fx-stroke: red");
+                                }
+                                else if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                                    line.setStyle("-fx-stroke: blue");
+                                }
+                                gridpaneWrapper.getChildren().add(line);
+                                computerSOSList.remove(0);
+                                computerSOSList.remove(0);
+                                computerSOSList.remove(0);
+                                System.out.println("Line created: " + startX + " " + startY + " " + endX + " " + endY);
+                            }
+                        }
+                        if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                            game.setPlayerTurn(PlayerTurn.PLAYER2);
+                        }
+                        else {
+                            game.setPlayerTurn(PlayerTurn.PLAYER1);
                         }
                     }
                 } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
@@ -212,20 +236,43 @@ public class CellController {
                     } else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
                         game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
                     }
+                    SOSList = game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
                     game.setPlayerTurn(PlayerTurn.PLAYER1);
                     if (game.player1Type == PlayerType.COMPUTER) {
                         c = game.computerMove();
-                        switch (game.board.getCellByIndex(c.getX(), c.getY()).getStatus()) {
-                            case S:
-                                childrenList.get(0).setVisible(true);
-                                break;
-                            case O:
-                                childrenList.get(1).setVisible(true);
-                                break;
+                        if (c.getX() != -1) {
+                            getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
+                            List<Coordinate> computerSOSList = game.checkForSOS(c.getX(), c.getY());
+                            if (!computerSOSList.isEmpty()) {
+                                StackPane startCell = getChildFromGridPaneByRowAndColumn(computerSOSList.get(0).getX(), computerSOSList.get(0).getY());
+                                StackPane endCell = getChildFromGridPaneByRowAndColumn(computerSOSList.get(2).getX(), computerSOSList.get(2).getY());
+                                double startX = startCell.getLayoutX() + (startCell.getWidth() / 2);
+                                double startY = startCell.getLayoutY() + (startCell.getHeight() / 2);
+                                double endX = endCell.getLayoutX() + (startCell.getWidth() / 2);
+                                double endY = endCell.getLayoutY() + (startCell.getHeight() / 2);
+                                Line line = new Line(startX, startY, endX, endY);
+                                line.setStrokeWidth(5);
+                                if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+                                    line.setStyle("-fx-stroke: red");
+                                }
+                                else if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                                    line.setStyle("-fx-stroke: blue");
+                                }
+                                gridpaneWrapper.getChildren().add(line);
+                                computerSOSList.remove(0);
+                                computerSOSList.remove(0);
+                                computerSOSList.remove(0);
+                                System.out.println("Line created: " + startX + " " + startY + " " + endX + " " + endY);
+                            }
+                        }
+                        if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                            game.setPlayerTurn(PlayerTurn.PLAYER2);
+                        }
+                        else {
+                            game.setPlayerTurn(PlayerTurn.PLAYER1);
                         }
                     }
                 }
-                SOSList = game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell));
             }
             if (game.getGameFinished()) {
                 winDisplay();
@@ -243,10 +290,10 @@ public class CellController {
                     double endY = endCell.getLayoutY() + (startCell.getHeight() / 2);
                     Line line = new Line(startX, startY, endX, endY);
                     line.setStrokeWidth(5);
-                    if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                    if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                         line.setStyle("-fx-stroke: red");
                     }
-                    else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
+                    else if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
                         line.setStyle("-fx-stroke: blue");
                     }
                     gridpaneWrapper.getChildren().add(line);
