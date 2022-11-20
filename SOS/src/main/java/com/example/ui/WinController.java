@@ -1,13 +1,17 @@
 package com.example.ui;
 
-import com.example.gamelogic.Cell;
-import com.example.gamelogic.Winner;
+import com.example.gamelogic.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class WinController {
+
+    @FXML
+    Label scoreLabel;
     @FXML
     Label winText;
+
+    GeneralGame g;
 
     @FXML
     public void initialize() {
@@ -19,6 +23,13 @@ public class WinController {
         }
         else if (CellController.game.winner == Winner.PLAYER2) {
             winText.setText("Player 2 wins!");
+        }
+        if (CellController.game.getGameMode() == GameMode.GENERAL) {
+            g = (GeneralGame) CellController.game;
+            scoreLabel.setText("Score: " + g.player1Points + " - " + g.player2Points);
+        }
+        else {
+            scoreLabel.setText("");
         }
     }
 }
