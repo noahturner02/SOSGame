@@ -62,6 +62,36 @@ public class CellController {
 
     static Game game = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
 
+    private void handleComputerMove() {
+        Coordinate c;
+        if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+            if (game.player1Type == PlayerType.COMPUTER) {
+                c = game.computerMove();
+                if (c.getX() != -1) {
+                    getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
+                    onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
+                }
+                game.setPlayerTurn(PlayerTurn.PLAYER2);
+                if ((game.player2Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
+                    handleComputerMove();
+                }
+            }
+        }
+        else {
+            if (game.player2Type == PlayerType.COMPUTER) {
+                c = game.computerMove();
+                if (c.getX() != -1) {
+                    getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
+                    onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
+                }
+                game.setPlayerTurn(PlayerTurn.PLAYER1);
+                if ((game.player1Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
+                    handleComputerMove();
+                }
+            }
+        }
+    }
+
     private void onClickUI(List<Coordinate> SOSList, StackPane cell) {
         ObservableList<Node> childrenList = cell.getChildren();
         if (SOSList.size() >= 3) {
@@ -118,19 +148,6 @@ public class CellController {
                 }
                 onClickUI(game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cell);
                 game.setPlayerTurn(PlayerTurn.PLAYER2);
-                if (game.player2Type == PlayerType.COMPUTER) {
-                    c = game.computerMove();
-                    if (c.getX() != -1) {
-                        getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
-                        onClickUI(game.checkForSOS(c.getX(), c.getY()), cell);
-                    }
-                    if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
-                        game.setPlayerTurn(PlayerTurn.PLAYER2);
-                    }
-                    else {
-                        game.setPlayerTurn(PlayerTurn.PLAYER1);
-                    }
-                }
             } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                 if (game.getPlayer2PieceSelected() == SelectedPiece.S) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
@@ -139,21 +156,9 @@ public class CellController {
                 }
                 onClickUI(game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cell);
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
-                if (game.player1Type == PlayerType.COMPUTER) {
-                    c = game.computerMove();
-                    if (c.getX() != -1) {
-                        getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()).getChildren().get(0).setVisible(true);
-                        onClickUI(game.checkForSOS(c.getX(), c.getY()), cell);
-                    }
-                    if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
-                        game.setPlayerTurn(PlayerTurn.PLAYER2);
-                    }
-                    else {
-                        game.setPlayerTurn(PlayerTurn.PLAYER1);
-                    }
-                }
             }
         }
+        handleComputerMove();
         if (game.getGameFinished()) {
             winDisplay();
         }
