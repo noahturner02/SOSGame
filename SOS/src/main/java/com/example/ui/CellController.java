@@ -156,7 +156,9 @@ public class CellController {
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
             }
         }
-        handleComputerMove();
+        if (!game.getGameFinished()) {
+            handleComputerMove();
+        }
         if (game.getGameFinished()) {
             winDisplay();
         }
