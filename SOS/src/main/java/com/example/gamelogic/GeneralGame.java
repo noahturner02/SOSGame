@@ -38,7 +38,171 @@ public class GeneralGame extends Game{
         return sosList;
     }
     @Override
-    public Coordinate computerMove() throws NullPointerException{
-        return new Coordinate(-1, -1);
+    public Coordinate computerMove() {
+        cellStatus SOSToken = cellStatus.S;
+        Coordinate c = null;
+        int maxSOSSize = 0;
+        Game testGame = (Game) this;
+        System.out.println("Computer makin' a move!");
+        for (int i = 0; i < board.getGameGrid().size(); i++) {
+            for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
+                if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
+                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                    if (testGame.checkForSOS(i, j).size() > maxSOSSize) {
+                        System.out.println("Computer has spotted SOS");
+                        c = new Coordinate(i, j);
+                        maxSOSSize = testGame.checkForSOS(i, j).size();
+                        SOSToken = cellStatus.S;
+                    }
+                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.O);
+                    if (testGame.checkForSOS(i, j).size() > maxSOSSize) {
+                        System.out.println("Computer has spotted SOS");
+                        c = new Coordinate(i, j);
+                        maxSOSSize = testGame.checkForSOS(i, j).size();
+                        SOSToken = cellStatus.O;
+                    }
+                    testGame.board.getCellByIndex(i, j).setStatus(cellStatus.EMPTY);
+                }
+            }
+        }
+        if (c == null) {
+            for (int i = 0; i < board.getGameGrid().size(); i++) {
+                for (int j = 0; j < board.getGameGrid().size(); j++) {
+                    if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
+                        if ((i + 2) <= board.getGameGrid().size() - 1) {
+                            if (board.getCellByIndex(i + 1, j).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i + 2, j).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if (((i + 2) <= board.getGameGrid().size() - 1) && ((j + 2) <= board.getGameGrid().size() - 1)) {
+                            if (board.getCellByIndex(i + 1, j + 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i + 2, j + 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if ((j + 2) <= board.getGameGrid().size() - 1) {
+                            if (board.getCellByIndex(i, j + 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i, j + 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if (((i - 2) >= 0) && ((j + 2) <= board.getGameGrid().size() - 1)) {
+                            if (board.getCellByIndex(i - 1, j + 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i - 2, j + 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if ((i - 2) >= 0) {
+                            if (board.getCellByIndex(i - 1, j).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i - 2, j).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if (((i - 2) >= 0) && ((j - 2) >= 0)) {
+                            if (board.getCellByIndex(i - 1, j - 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i - 2, j - 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        if ((j - 2) >= 0) {
+                            if (board.getCellByIndex(i, j - 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i, j - 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+                        if (((i + 2) <= board.getGameGrid().size() - 1) && ((j - 2) >= 0)) {
+                            if (board.getCellByIndex(i + 1, j - 1).getStatus() == cellStatus.O) {
+                                if (board.getCellByIndex(i + 2, j - 2).getStatus() == cellStatus.EMPTY) {
+                                    continue;
+                                }
+                            }
+                        }
+                        board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                        return new Coordinate(i, j);
+                    }
+                }
+            }
+        }
+
+        if (c == null) {
+            for (int i = 0; i < board.getGameGrid().size(); i++) {
+                for (int j = 0; j < board.getGameGrid().size(); j++) {
+                    if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
+                        if ((i + 1) <= board.getGameGrid().size() - 1) {
+                            if ((i - 1) >= 0) {
+                                if (board.getCellByIndex(i + 1, j).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i - 1, j).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (((i + 1) <= board.getGameGrid().size() - 1) && ((j + 1) <= board.getGameGrid().size() - 1)) {
+                            if (((i - 1) >= 0) && ((j - 1) >= 0)) {
+                                if (board.getCellByIndex(i + 1, j + 1).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i - 1, j - 1).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        if ((j + 1) <= board.getGameGrid().size() - 1) {
+                            if ((j - 1) >= 0) {
+                                if (board.getCellByIndex(i, j + 1).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i, j - 1).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (((i + 1) <= board.getGameGrid().size() - 1) && ((j - 1) >= 0)) {
+                            if (((i - 1) >= 0) && ((j + 1) <= board.getGameGrid().size() - 1)) {
+                                if (board.getCellByIndex(i + 1, j - 1).getStatus() == cellStatus.S) {
+                                    if (board.getCellByIndex(i - 1, j + 1).getStatus() == cellStatus.S) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+                        board.getCellByIndex(i, j).setStatus(cellStatus.O);
+                        return new Coordinate(i, j);
+                    }
+                }
+            }
+        }
+        if (c == null) {
+            for (int i = 0; i < board.getGameGrid().size(); i++) {
+                for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
+                    if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
+                        board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                        return new Coordinate(i, j);
+                    }
+                }
+            }
+        }
+        if (c != null) {
+            board.getCellByIndex(c.getX(), c.getY()).setStatus(SOSToken);
+        }
+        else {
+            return new Coordinate(-1, -1);
+        }
+        return c;
     }
 }

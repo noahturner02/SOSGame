@@ -167,7 +167,6 @@ public class SimpleGame extends Game{
                                 }
                             }
                         }
-
                         board.getCellByIndex(i, j).setStatus(cellStatus.O);
                         return new Coordinate(i, j);
                     }
