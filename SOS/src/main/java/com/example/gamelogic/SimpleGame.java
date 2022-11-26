@@ -2,6 +2,7 @@ package com.example.gamelogic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SimpleGame extends Game{
 
@@ -29,9 +30,13 @@ public class SimpleGame extends Game{
     }
     @Override
     public Coordinate computerMove() {
+        Random rand = new Random();
         Coordinate c = null;
+        List<Coordinate> potentialSMoves = new ArrayList<>();
+        List<Coordinate> potentialOMoves = new ArrayList<>();
+        List<Coordinate> selectedList = new ArrayList<>();
         System.out.println("Computer makin' a move!");
-        for (int i = 0; i < board.getGameGrid().size(); i++) {
+        for (int i = 0; i < board.getGameGrid().size(); i++) { // Check for free SOS's
             for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                 if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
                     board.getCellByIndex(i, j).setStatus(cellStatus.S);
@@ -50,7 +55,7 @@ public class SimpleGame extends Game{
                 }
             }
         }
-        if (c == null) {
+        if (c == null) { // Avoid setting up SOS's next turn via S
             for (int i = 0; i < board.getGameGrid().size(); i++) {
                 for (int j = 0; j < board.getGameGrid().size(); j++) {
                     if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
@@ -116,14 +121,13 @@ public class SimpleGame extends Game{
                                 }
                             }
                         }
-                        board.getCellByIndex(i, j).setStatus(cellStatus.S);
-                        return new Coordinate(i, j);
+                        potentialSMoves.add(new Coordinate(i, j));
                     }
                 }
             }
         }
 
-        if (c == null) {
+        if (c == null) { // Avoid setting up SOS's via O
             for (int i = 0; i < board.getGameGrid().size(); i++) {
                 for (int j = 0; j < board.getGameGrid().size(); j++) {
                     if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
@@ -166,13 +170,12 @@ public class SimpleGame extends Game{
                                 }
                             }
                         }
-                        board.getCellByIndex(i, j).setStatus(cellStatus.O);
-                        return new Coordinate(i, j);
+                        potentialOMoves.add(new Coordinate(i, j));
                     }
                 }
             }
         }
-        if (c == null) {
+        if ((c == null) && (potentialSMoves.isEmpty()) && (potentialOMoves.isEmpty())) { // Suicide. Select an open square
             for (int i = 0; i < board.getGameGrid().size(); i++) {
                 for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                     if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
@@ -190,7 +193,34 @@ public class SimpleGame extends Game{
                 computerSelectedPiece = cellStatus.S;
             }
         }
-        else {
+        else if (!potentialSMoves.isEmpty() && !potentialOMoves.isEmpty()) { // Possible S and O moves. Choose one
+            cellStatus piece = cellStatus.S;
+            if (rand.nextInt(2) == 0) {
+                selectedList = potentialSMoves;
+                piece = cellStatus.S;
+            }
+            else {
+                selectedList = potentialOMoves;
+                piece = cellStatus.O;
+            }
+            int index = rand.nextInt(selectedList.size());
+            Coordinate selectedMove = selectedList.get(index);
+            board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(piece);
+            return selectedMove;
+        }
+        else if (!potentialSMoves.isEmpty() && potentialOMoves.isEmpty()) { // Only S moves are possible. Choose one
+            int index = rand.nextInt(potentialSMoves.size());
+            Coordinate selectedMove = potentialSMoves.get(index);
+            board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.S);
+            return selectedMove;
+        }
+        else if (!potentialOMoves.isEmpty() && potentialSMoves.isEmpty()) { // Only O moves are possible. Choose one
+            int index = rand.nextInt(potentialOMoves.size());
+            Coordinate selectedMove = potentialOMoves.get(index);
+            board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.O);
+            return selectedMove;
+        }
+        else { // Board is filled
             setGameFinished(true);
             winner = Winner.DRAW;
             return new Coordinate(-1, -1);
