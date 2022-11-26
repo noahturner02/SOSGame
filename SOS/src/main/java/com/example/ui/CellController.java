@@ -163,7 +163,7 @@ public class CellController {
         if (!game.getGameFinished()) {
             handleComputerMove();
         }
-        if (game.getGameFinished()) {
+        else if (game.getGameFinished()) {
             winDisplay();
         }
     }
