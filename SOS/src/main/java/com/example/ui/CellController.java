@@ -1,6 +1,7 @@
 package com.example.ui;
 
 import com.example.gamelogic.*;
+import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,13 +70,26 @@ public class CellController {
             if (game.player1Type == PlayerType.COMPUTER) {
                 c = game.computerMove();
                 if (c.getX() != -1) {
-                    onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
+                    PauseTransition pauseTransition = new PauseTransition(Duration.seconds(.5));
+                    pauseTransition.setOnFinished(event -> {
+                        onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
+                        game.setPlayerTurn(PlayerTurn.PLAYER2);
+                        if ((game.player2Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
+                            handleComputerMove();
+                        } else if (game.getGameFinished()) {
+                            winDisplay();
+                        }
+                        }
+                    );
+                    pauseTransition.play();
                 }
-                game.setPlayerTurn(PlayerTurn.PLAYER2);
-                if ((game.player2Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
-                    handleComputerMove();
-                } else if (game.getGameFinished()) {
-                    winDisplay();
+                else {
+                    game.setPlayerTurn(PlayerTurn.PLAYER2);
+                    if ((game.player2Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
+                        handleComputerMove();
+                    } else if (game.getGameFinished()) {
+                        winDisplay();
+                    }
                 }
             }
         }
@@ -82,13 +97,26 @@ public class CellController {
             if (game.player2Type == PlayerType.COMPUTER) {
                 c = game.computerMove();
                 if (c.getX() != -1) {
-                    onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
+                    PauseTransition pauseTransition = new PauseTransition(Duration.seconds(.5));
+                    pauseTransition.setOnFinished(event -> {
+                        onClickUI(game.checkForSOS(c.getX(), c.getY()), getChildFromGridPaneByRowAndColumn(c.getX(), c.getY()));
+                        game.setPlayerTurn(PlayerTurn.PLAYER1);
+                        if ((game.player1Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
+                            handleComputerMove();
+                        } else if (game.getGameFinished()) {
+                            winDisplay();
+                        }
+                        }
+                    );
+                    pauseTransition.play();
                 }
-                game.setPlayerTurn(PlayerTurn.PLAYER1);
-                if ((game.player1Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
-                    handleComputerMove();
-                } else if (game.getGameFinished()) {
-                    winDisplay();
+                else {
+                    game.setPlayerTurn(PlayerTurn.PLAYER1);
+                    if ((game.player1Type == PlayerType.COMPUTER) && (!game.getGameFinished())) {
+                        handleComputerMove();
+                    } else if (game.getGameFinished()) {
+                        winDisplay();
+                    }
                 }
             }
         }
