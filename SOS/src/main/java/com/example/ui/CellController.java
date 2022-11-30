@@ -223,8 +223,6 @@ public class CellController {
                 System.out.println(m.getX() + ", " + m.getY() + " - O\n");
             }
         }
-        game.setMoveRecordList(new ArrayList<>());
-
     }
 
     private StackPane getChildFromGridPaneByRowAndColumn(int row, int column) {
@@ -283,6 +281,7 @@ public class CellController {
                 if (player1Type == PlayerType.COMPUTER) {
                     handleComputerMove();
                 }
+                game.setMoveRecordList(new ArrayList<>());
             }
         });
     }
