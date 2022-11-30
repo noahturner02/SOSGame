@@ -193,6 +193,7 @@ public class GeneralGame extends Game{
                 for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                     if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
                         board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                        addMoveRecord(new MoveRecord(i, j, SelectedPiece.S));
                         return new Coordinate(i, j);
                     }
                 }
@@ -201,8 +202,10 @@ public class GeneralGame extends Game{
         if (c != null) {
             board.getCellByIndex(c.getX(), c.getY()).setStatus(computerSelectedPiece);
             if (computerSelectedPiece == cellStatus.S) {
+                addMoveRecord(new MoveRecord(c.getX(), c.getY(), SelectedPiece.S));
                 computerSelectedPiece = cellStatus.O;
             } else {
+                addMoveRecord(new MoveRecord(c.getX(), c.getY(), SelectedPiece.O));
                 computerSelectedPiece = cellStatus.S;
             }
         }
@@ -219,18 +222,26 @@ public class GeneralGame extends Game{
             int index = rand.nextInt(selectedList.size());
             Coordinate selectedMove = selectedList.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(piece);
+            if (piece == cellStatus.S) {
+                addMoveRecord(new MoveRecord(selectedMove.getX(), selectedMove.getY(), SelectedPiece.S));
+            }
+            else if (piece == cellStatus.O) {
+                addMoveRecord(new MoveRecord(selectedMove.getX(), selectedMove.getY(), SelectedPiece.O));
+            }
             return selectedMove;
         }
         else if (!potentialSMoves.isEmpty() && potentialOMoves.isEmpty()) { // Only S moves are possible. Choose one
             int index = rand.nextInt(potentialSMoves.size());
             Coordinate selectedMove = potentialSMoves.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.S);
+            addMoveRecord(new MoveRecord(selectedMove.getX(), selectedMove.getY(), SelectedPiece.S));
             return selectedMove;
         }
         else if (!potentialOMoves.isEmpty() && potentialSMoves.isEmpty()) { // Only O moves are possible. Choose one
             int index = rand.nextInt(potentialOMoves.size());
             Coordinate selectedMove = potentialOMoves.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.O);
+            addMoveRecord(new MoveRecord(selectedMove.getX(), selectedMove.getY(), SelectedPiece.O));
             return selectedMove;
         }
         else {

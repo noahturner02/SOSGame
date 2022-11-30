@@ -16,6 +16,7 @@ public abstract class Game {
     public PlayerType player2Type;
     public cellStatus computerSelectedPiece;
     public boolean recordGame = false;
+    private List<MoveRecord> moveRecordList = new ArrayList<>();
 
     public Game(GameMode gameMode, int gameSize, PlayerType player1Type, PlayerType player2Type, boolean recordGame) {
         this.gameMode = gameMode;
@@ -57,6 +58,13 @@ public abstract class Game {
     public boolean getGameFinished() { return gameFinished; }
     public boolean getRecordGame() { return recordGame; }
     public void setRecordGame(boolean recordGame) { this.recordGame = recordGame; }
+    public void setMoveRecordList(List<MoveRecord> moveRecordList) {
+        this.moveRecordList = moveRecordList;
+    }
+    public List<MoveRecord> getMoveRecordList() { return moveRecordList; }
+    public void addMoveRecord(MoveRecord moveRecord) {
+        moveRecordList.add(moveRecord);
+    }
     abstract public Coordinate computerMove();
     public List<Coordinate> checkForSOS(int row, int column) { // row and column of last placed item
         List<Coordinate> sosCells = new ArrayList<>();

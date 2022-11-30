@@ -174,16 +174,20 @@ public class CellController {
             if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
                 if (game.getPlayer1PieceSelected() == SelectedPiece.S) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
+                    game.addMoveRecord(new MoveRecord(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell), SelectedPiece.S));
                 } else if (game.getPlayer1PieceSelected() == SelectedPiece.O) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
+                    game.addMoveRecord(new MoveRecord(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell), SelectedPiece.O));
                 }
                 onClickUI(game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cell);
                 game.setPlayerTurn(PlayerTurn.PLAYER2);
             } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                 if (game.getPlayer2PieceSelected() == SelectedPiece.S) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
+                    game.addMoveRecord(new MoveRecord(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell), SelectedPiece.S));
                 } else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
+                    game.addMoveRecord(new MoveRecord(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell), SelectedPiece.O));
                 }
                 onClickUI(game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cell);
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
@@ -212,6 +216,14 @@ public class CellController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        for (MoveRecord m : game.getMoveRecordList()) {
+            if (m.getPiece() == SelectedPiece.S) {
+                System.out.println(m.getX() + ", " + m.getY() + " - S\n");
+            } else {
+                System.out.println(m.getX() + ", " + m.getY() + " - O\n");
+            }
+        }
+        game.setMoveRecordList(new ArrayList<>());
 
     }
 
