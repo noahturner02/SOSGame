@@ -16,7 +16,7 @@ public class GameTest {
     @Test
     @DisplayName("AC 1.1: Selecting Board Size For Blank Board")
     void AC1_1() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         Assertions.assertEquals(3, g.board.getGameGrid().size()); // The number of rows should be initialized at 3
         g.board.resizeBoard(10);
         Assertions.assertEquals(10, g.board.getGameGrid().size()); // The number of rows should be 10 now.
@@ -24,7 +24,7 @@ public class GameTest {
     @Test
     @DisplayName("AC 1.2: Selecting Board Size for Game In Progress")
     void AC1_2() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S); // A piece is on the board. The game is now in progress
         g.board.resizeBoard(7);
         Assertions.assertEquals(7, g.board.getGameGrid().size());
@@ -38,14 +38,14 @@ public class GameTest {
     @DisplayName("AC 1.3: Invalid Board Size")
     void AC1_3() { // Note that since the UI implementation uses a slider, that it is impossible to input a number other than {3, 4, 5, 6, 7, 8, 9, 10}
         // When a number larger than this is supplied directly to the resize method, though, an additional safeguard will prevent anything from happening
-        Game g = new SimpleGame( 3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new SimpleGame( 3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.resizeBoard(12);
         Assertions.assertEquals(3, g.board.getGameGrid().size());
     }
     @Test
     @DisplayName("AC 2.1: Choose the game mode of the chosen game")
     void AC2_1() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         Assertions.assertEquals(GameMode.SIMPLE, g.getGameMode());
         g.setGameMode(GameMode.GENERAL);
         Assertions.assertEquals(GameMode.GENERAL, g.getGameMode());
@@ -53,8 +53,8 @@ public class GameTest {
     @Test
     @DisplayName("AC 3.1: Start a new game of the chosen board size and game mode")
     void AC3_1() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
-        g = new GeneralGame(10, PlayerType.HUMAN, PlayerType.HUMAN); // To make a new game, simply construct a new game object supplied with the user's input.
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
+        g = new GeneralGame(10, PlayerType.HUMAN, PlayerType.HUMAN, false); // To make a new game, simply construct a new game object supplied with the user's input.
         Assertions.assertEquals(10, g.board.getGameGrid().size());
         Assertions.assertEquals(GameMode.GENERAL, g.getGameMode());
         Assertions.assertEquals(PlayerTurn.PLAYER1, g.getPlayerTurn());
@@ -62,14 +62,14 @@ public class GameTest {
     @Test
     @DisplayName("AC 4.1: Make a move in a simple game")
     void AC4_1() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN,false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S); // Take the coordinates from the location in the GridPane
         Assertions.assertEquals(cellStatus.S, g.board.getCellByIndex(0, 0).getStatus());
     }
     @Test
     @DisplayName("AC 6.1: Make a move in a general game")
     void AC6_1() {
-        Game g = new GeneralGame( 3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new GeneralGame( 3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.O);
         Assertions.assertEquals(cellStatus.O, g.board.getCellByIndex(0, 0).getStatus());
     }
@@ -77,7 +77,7 @@ public class GameTest {
     @Test
     @DisplayName("Register an SOS on simple")
     void SOS_simple() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
@@ -90,7 +90,7 @@ public class GameTest {
     @Test
     @DisplayName("Register an SOS on General")
     void SOS_General() {
-        Game g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        Game g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
@@ -103,7 +103,7 @@ public class GameTest {
     @Test
     @DisplayName("Multiple SOS' with one move")
     void mult_SOS() {
-        GeneralGame g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        GeneralGame g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(1, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(2, 0).setStatus(cellStatus.S);
@@ -120,7 +120,7 @@ public class GameTest {
     @Test
     @DisplayName("A Simple Game ends in a win")
     void simpleWin() {
-        SimpleGame g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        SimpleGame g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
@@ -132,7 +132,7 @@ public class GameTest {
     @Test
     @DisplayName("A Simple Game ends in a draw")
     void simpleDraw() {
-        SimpleGame g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        SimpleGame g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
@@ -150,7 +150,7 @@ public class GameTest {
     @Test
     @DisplayName("A General Game ends in a win")
     void generalWin() {
-        GeneralGame g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        GeneralGame g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
@@ -172,7 +172,7 @@ public class GameTest {
     @Test
     @DisplayName("A General Game ends in a draw")
     void generalDraw() {
-        GeneralGame g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+        GeneralGame g = new GeneralGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 2).setStatus(cellStatus.S);
@@ -190,7 +190,7 @@ public class GameTest {
     @Test
     @DisplayName("AC 8.3")
     void AC8_3() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.COMPUTER);
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.COMPUTER, false);
         g.board.getCellByIndex(0, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
         Coordinate c = g.computerMove();
@@ -201,7 +201,7 @@ public class GameTest {
     @Test
     @DisplayName("AC 8.4")
     void AC8_4() {
-        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.COMPUTER);
+        Game g = new SimpleGame(3, PlayerType.HUMAN, PlayerType.COMPUTER, false);
         g.board.getCellByIndex(0, 1).setStatus(cellStatus.O);
         Coordinate c = g.computerMove();
         Assertions.assertEquals(c.getX(), 1);
@@ -211,7 +211,7 @@ public class GameTest {
     @Test
     @DisplayName("AC 8.5")
     void AC8_5() {
-        Game g = new GeneralGame(5, PlayerType.HUMAN, PlayerType.COMPUTER);
+        Game g = new GeneralGame(5, PlayerType.HUMAN, PlayerType.COMPUTER, false);
         g.board.getCellByIndex(1, 0).setStatus(cellStatus.O);
         g.board.getCellByIndex(2, 0).setStatus(cellStatus.S);
         g.board.getCellByIndex(4, 4).setStatus(cellStatus.S);

@@ -7,8 +7,8 @@ import java.util.Random;
 public class GeneralGame extends Game{
     public int player1Points = 0;
     public int player2Points = 0;
-    public GeneralGame(int gameSize, PlayerType player1Type, PlayerType player2Type) {
-        super(GameMode.GENERAL, gameSize, player1Type, player2Type);
+    public GeneralGame(int gameSize, PlayerType player1Type, PlayerType player2Type, boolean recordGame) {
+        super(GameMode.GENERAL, gameSize, player1Type, player2Type, recordGame);
     }
     @Override
     public List<Coordinate> checkForSOS(int row, int column) {

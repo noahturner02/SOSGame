@@ -15,12 +15,14 @@ public abstract class Game {
     public PlayerType player1Type;
     public PlayerType player2Type;
     public cellStatus computerSelectedPiece;
+    public boolean recordGame = false;
 
-    public Game(GameMode gameMode, int gameSize, PlayerType player1Type, PlayerType player2Type) {
+    public Game(GameMode gameMode, int gameSize, PlayerType player1Type, PlayerType player2Type, boolean recordGame) {
         this.gameMode = gameMode;
         this.gameSize = gameSize;
         this.player1Type = player1Type;
         this.player2Type = player2Type;
+        this.recordGame = recordGame;
         playerTurn = PlayerTurn.PLAYER1;
         gameFinished = false;
         board = new GameBoard(gameSize);
@@ -53,6 +55,8 @@ public abstract class Game {
         return gameMode;
     }
     public boolean getGameFinished() { return gameFinished; }
+    public boolean getRecordGame() { return recordGame; }
+    public void setRecordGame(boolean recordGame) { this.recordGame = recordGame; }
     abstract public Coordinate computerMove();
     public List<Coordinate> checkForSOS(int row, int column) { // row and column of last placed item
         List<Coordinate> sosCells = new ArrayList<>();

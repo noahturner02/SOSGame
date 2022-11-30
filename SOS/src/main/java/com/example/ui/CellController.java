@@ -9,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -27,6 +24,10 @@ import java.util.List;
 
 public class CellController {
 
+    @FXML
+    CheckBox recordGameBox;
+    @FXML
+    Button replayButton;
     @FXML
     Group gridpaneWrapper;
     @FXML
@@ -62,7 +63,7 @@ public class CellController {
     @FXML
     RadioButton player2ComputerButton;
 
-    static Game game = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN);
+    static Game game = new SimpleGame(3, PlayerType.HUMAN, PlayerType.HUMAN, false);
 
     private void handleComputerMove() {
         Coordinate c;
@@ -234,6 +235,7 @@ public class CellController {
                 System.out.println("new game'd");
                 PlayerType player1Type = null;
                 PlayerType player2Type = null;
+                boolean recordGame = false;
                 if (player1HumanButton.isSelected()) {
                     player1Type = PlayerType.HUMAN;
                 }
@@ -246,11 +248,17 @@ public class CellController {
                 else if (player2ComputerButton.isSelected()) {
                     player2Type = PlayerType.COMPUTER;
                 }
-                if (simpleGame.isSelected()) {
-                    game = new SimpleGame(getSliderSize(), player1Type, player2Type);
+                if (recordGameBox.isSelected()) {
+                    recordGame = true;
                 }
                 else {
-                    game = new GeneralGame(getSliderSize(), player1Type, player2Type);
+                    recordGame = false;
+                }
+                if (simpleGame.isSelected()) {
+                    game = new SimpleGame(getSliderSize(), player1Type, player2Type, recordGame);
+                }
+                else {
+                    game = new GeneralGame(getSliderSize(), player1Type, player2Type, recordGame);
                 }
                 resizeBoard(getSliderSize());
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
