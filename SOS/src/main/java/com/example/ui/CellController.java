@@ -234,6 +234,7 @@ public class CellController {
     private int getSliderSize() {
         return  (int) sizeSlider.getValue();
     }
+
     private void setNewGameButtonHandler() {
         newGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() { // Handles newGameButton Clicks
             @Override
@@ -275,18 +276,23 @@ public class CellController {
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
 
-                try {
-                    PrintWriter writer = new PrintWriter("savedGame.txt");
-                    writer.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                clearLogFile();
 
                 if (player1Type == PlayerType.COMPUTER) {
                     handleComputerMove();
                 }
             }
         });
+    }
+
+    private void clearLogFile() {
+        try { // Basically clears the contents of the file
+            PrintWriter writer = new PrintWriter("savedGame.txt");
+            writer.print("");
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void resizeBoard(int size) {
@@ -384,6 +390,8 @@ public class CellController {
                 game.setPlayer2PieceSelected(SelectedPiece.O);
             }
         });
+
+        clearLogFile();
 
         System.out.println("Initialized");
         player1Pane.setStyle("-fx-background-color: #6D9DD5");

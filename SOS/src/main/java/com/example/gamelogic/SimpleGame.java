@@ -50,7 +50,7 @@ public class SimpleGame extends Game{
                     if (!super.checkForSOS(i, j).isEmpty()) {
                         System.out.println("Computer has spotted SOS");
                         board.getCellByIndex(i, j).setStatus(cellStatus.O);
-                        writeToFile(c, cellStatus.O);
+                        writeToFile(new Coordinate(i, j), cellStatus.O);
                         return new Coordinate(i, j);
                     }
                     board.getCellByIndex(i, j).setStatus(cellStatus.EMPTY);
