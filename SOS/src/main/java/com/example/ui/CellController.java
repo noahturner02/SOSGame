@@ -126,9 +126,37 @@ public class CellController {
         }
     }
 
+    private void hideAllPieces() {
+        ObservableList<Node> nodeList = gameBoard.getChildren();
+        for (Node n : nodeList) { // Remove S's and O's from the board
+            if (n instanceof StackPane) {
+                StackPane s = (StackPane) n;
+                s.getChildren().get(0).setVisible(false);
+                s.getChildren().get(1).setVisible(false);
+            }
+        }
+    }
+
+    private void removeLines() {
+        // removes lines from display
+        ObservableList<Node> lineList = gridpaneWrapper.getChildren();
+        while (lineList.size() > 1) {
+            lineList.remove(1);
+        }
+    }
+
     private void replayGameFromTextFile() {
         // Handles replaying the game from the text file
-        
+        Game replayGame;
+        if (game.getGameMode() == GameMode.GENERAL) {
+            replayGame = new GeneralGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
+        }
+        else if (game.getGameMode() == GameMode.SIMPLE) {
+            replayGame = new SimpleGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
+        }
+        hideAllPieces();
+        removeLines();
+
     }
 
     private void replayButtonEnableCheck() {
