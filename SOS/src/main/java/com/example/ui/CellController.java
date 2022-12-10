@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,17 +175,22 @@ public class CellController {
             if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
                 if (game.getPlayer1PieceSelected() == SelectedPiece.S) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
+                    game.writeToFile(new Coordinate(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cellStatus.S);
                 } else if (game.getPlayer1PieceSelected() == SelectedPiece.O) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
+                    game.writeToFile(new Coordinate(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cellStatus.O);
                 }
                 onClickUI(game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cell);
                 game.setPlayerTurn(PlayerTurn.PLAYER2);
             } else if (game.getPlayerTurn() == PlayerTurn.PLAYER2) {
                 if (game.getPlayer2PieceSelected() == SelectedPiece.S) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.S);
+                    game.writeToFile(new Coordinate(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cellStatus.S);
                 } else if (game.getPlayer2PieceSelected() == SelectedPiece.O) {
                     game.board.getCellByIndex(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)).setStatus(cellStatus.O);
+                    game.writeToFile(new Coordinate(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cellStatus.O);
                 }
+
                 onClickUI(game.checkForSOS(GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)), cell);
                 game.setPlayerTurn(PlayerTurn.PLAYER1);
             }
@@ -268,6 +274,14 @@ public class CellController {
                 game.setPlayer2PieceSelected(SelectedPiece.S);
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
+
+                try {
+                    PrintWriter writer = new PrintWriter("savedGame.txt");
+                    writer.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 if (player1Type == PlayerType.COMPUTER) {
                     handleComputerMove();
                 }

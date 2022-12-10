@@ -43,12 +43,14 @@ public class SimpleGame extends Game{
                     if (!super.checkForSOS(i, j).isEmpty()) {
                         System.out.println("Computer has spotted SOS");
                         board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                        writeToFile(new Coordinate(i, j), cellStatus.S);
                         return new Coordinate(i, j);
                     }
                     board.getCellByIndex(i, j).setStatus(cellStatus.O);
                     if (!super.checkForSOS(i, j).isEmpty()) {
                         System.out.println("Computer has spotted SOS");
                         board.getCellByIndex(i, j).setStatus(cellStatus.O);
+                        writeToFile(c, cellStatus.O);
                         return new Coordinate(i, j);
                     }
                     board.getCellByIndex(i, j).setStatus(cellStatus.EMPTY);
@@ -180,6 +182,7 @@ public class SimpleGame extends Game{
                 for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                     if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
                         board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                        writeToFile(new Coordinate(i, j), cellStatus.S);
                         return new Coordinate(i, j);
                     }
                 }
@@ -187,6 +190,7 @@ public class SimpleGame extends Game{
         }
         if (c != null) {
             board.getCellByIndex(c.getX(), c.getY()).setStatus(computerSelectedPiece);
+            writeToFile(c, computerSelectedPiece);
             if (computerSelectedPiece == cellStatus.S) {
                 computerSelectedPiece = cellStatus.O;
             } else {
@@ -194,7 +198,7 @@ public class SimpleGame extends Game{
             }
         }
         else if (!potentialSMoves.isEmpty() && !potentialOMoves.isEmpty()) { // Possible S and O moves. Choose one
-            cellStatus piece = cellStatus.S;
+            cellStatus piece;
             if (rand.nextInt(2) == 0) {
                 selectedList = potentialSMoves;
                 piece = cellStatus.S;
@@ -206,18 +210,21 @@ public class SimpleGame extends Game{
             int index = rand.nextInt(selectedList.size());
             Coordinate selectedMove = selectedList.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(piece);
+            writeToFile(selectedMove, piece);
             return selectedMove;
         }
         else if (!potentialSMoves.isEmpty() && potentialOMoves.isEmpty()) { // Only S moves are possible. Choose one
             int index = rand.nextInt(potentialSMoves.size());
             Coordinate selectedMove = potentialSMoves.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.S);
+            writeToFile(selectedMove, cellStatus.S);
             return selectedMove;
         }
         else if (!potentialOMoves.isEmpty() && potentialSMoves.isEmpty()) { // Only O moves are possible. Choose one
             int index = rand.nextInt(potentialOMoves.size());
             Coordinate selectedMove = potentialOMoves.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.O);
+            writeToFile(selectedMove, cellStatus.O);
             return selectedMove;
         }
         else { // Board is filled
