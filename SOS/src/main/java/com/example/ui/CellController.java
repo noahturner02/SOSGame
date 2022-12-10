@@ -124,6 +124,14 @@ public class CellController {
         }
     }
 
+    private void replayButtonEnableCheck() {
+        if (game.getGameFinished()) {
+            replayButton.setDisable(false);
+        } else {
+            replayButton.setDisable(true);
+        }
+    }
+
     private void onClickUI(List<Coordinate> SOSList, StackPane cell) {
         ObservableList<Node> childrenList = cell.getChildren();
         if (SOSList.size() >= 3) {
@@ -165,6 +173,7 @@ public class CellController {
             player2Pane.setStyle("-fx-background-color: #FFFFFF");
             player1Pane.setStyle("-fx-background-color: #6D9DD5");
         }
+        replayButtonEnableCheck();
     }
 
     private void onClickData(StackPane cell) {
@@ -261,6 +270,7 @@ public class CellController {
                 else {
                     recordGame = false;
                 }
+
                 if (simpleGame.isSelected()) {
                     game = new SimpleGame(getSliderSize(), player1Type, player2Type, recordGame);
                 }
@@ -275,7 +285,7 @@ public class CellController {
                 game.setPlayer2PieceSelected(SelectedPiece.S);
                 player1Pane.setStyle("-fx-background-color: #6D9DD5");
                 player2Pane.setStyle("-fx-background-color: #FFFFFF");
-
+                replayButtonEnableCheck();
                 clearLogFile();
 
                 if (player1Type == PlayerType.COMPUTER) {
@@ -390,7 +400,7 @@ public class CellController {
                 game.setPlayer2PieceSelected(SelectedPiece.O);
             }
         });
-
+        replayButtonEnableCheck();
         clearLogFile();
 
         System.out.println("Initialized");

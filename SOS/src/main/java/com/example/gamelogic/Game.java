@@ -63,6 +63,9 @@ public abstract class Game {
     private String filename = "savedGame.txt"; // name of the text file
 
     public void writeToFile(Coordinate c, cellStatus cStatus) {
+        if (!recordGame) { // Only log the game if the box is checked
+            return;
+        }
         try {
             FileWriter writer = new FileWriter(filename, true);
             writer.append(c.getX() + ", " + c.getY() + ", " + cStatus + "\n");
@@ -71,7 +74,7 @@ public abstract class Game {
             e.printStackTrace();
         }
     }
-    
+
     public List<Coordinate> checkForSOS(int row, int column) { // row and column of last placed item
         List<Coordinate> sosCells = new ArrayList<>();
         if (board.getCellByIndex(row, column).getStatus() == cellStatus.S) {
