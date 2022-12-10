@@ -125,7 +125,7 @@ public class CellController {
     }
 
     private void replayButtonEnableCheck() {
-        if (game.getGameFinished()) {
+        if (game.getGameFinished() && game.getRecordGame()) {
             replayButton.setDisable(false);
         } else {
             replayButton.setDisable(true);
