@@ -124,6 +124,11 @@ public class CellController {
         }
     }
 
+    private void replayGameFromTextFile() {
+        // Handles replaying the game from the text file
+
+    }
+
     private void replayButtonEnableCheck() {
         if (game.getGameFinished() && game.getRecordGame()) {
             replayButton.setDisable(false);
@@ -398,6 +403,14 @@ public class CellController {
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("Player 2 Using O's");
                 game.setPlayer2PieceSelected(SelectedPiece.O);
+            }
+        });
+
+        replayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Got my iPod stuck on replay");
+                replayGameFromTextFile();
             }
         });
         replayButtonEnableCheck();
