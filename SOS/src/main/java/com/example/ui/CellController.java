@@ -146,10 +146,10 @@ public class CellController {
     private void replayGameFromTextFile() {
         // Handles replaying the game from the text file
         if (game.getGameMode() == GameMode.GENERAL) {
-            game = new GeneralGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
+            game = new GeneralGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, false);
         }
         else if (game.getGameMode() == GameMode.SIMPLE) {
-            game = new SimpleGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
+            game = new SimpleGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, false);
         }
 
         hideAllPieces();
@@ -163,24 +163,29 @@ public class CellController {
         try {
             BufferedReader br = new BufferedReader(new FileReader("savedGame.txt"));
             String s = br.readLine();
-            String[] paramList = s.split(", ");
-            row = Integer.parseInt(paramList[0]);
-            column = Integer.parseInt(paramList[1]);
-            piece = paramList[2];
+            while (!s.equals("EOF")) {
+                String[] paramList = s.split(", ");
+                row = Integer.parseInt(paramList[0]);
+                column = Integer.parseInt(paramList[1]);
+                piece = paramList[2];
+                if (piece.equals("S")) { // Convert string to cellStatus
+                    cs = cellStatus.S;
+                }
+                else if (piece.equals("O")) {
+                    cs = cellStatus.O;
+                }
+                System.out.println("Result: " + row + ", " + column + ", " + piece);
+                game.board.getCellByIndex(row, column).setStatus(cs);
+                onClickUI(game.checkForSOS(row, column), getChildFromGridPaneByRowAndColumn(row, column));
+                s = br.readLine();
+            }
+            if (game.getGameFinished()) {
+                winDisplay();
+            }
+            System.out.println("Replay complete :)");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Result: " + row + ", " + column + ", " + piece);
-
-        if (piece.equals("S")) { // Convert string to cellStatus
-            cs = cellStatus.S;
-        }
-        else if (piece.equals("O")) {
-            cs = cellStatus.O;
-        }
-
-        game.board.getCellByIndex(row, column).setStatus(cs);
-        onClickUI(game.checkForSOS(row, column), getChildFromGridPaneByRowAndColumn(row, column));
     }
 
     private void replayButtonEnableCheck() {
