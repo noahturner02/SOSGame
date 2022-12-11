@@ -18,10 +18,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.FileReader;
-import java.io.BufferedReader;
+import java.io.*;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,8 +152,35 @@ public class CellController {
         else if (game.getGameMode() == GameMode.SIMPLE) {
             replayGame = new SimpleGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
         }
+
         hideAllPieces();
         removeLines();
+
+        // Parse the line for coordinates and piece
+        int row = 0;
+        int column = 0;
+        String piece = "Q";
+        cellStatus cs = cellStatus.EMPTY
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("savedGame.txt"));
+            String s = br.readLine();
+            String[] paramList = s.split(", ");
+            row = Integer.parseInt(paramList[0]);
+            column = Integer.parseInt(paramList[1]);
+            piece = paramList[2];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Result: " + row + ", " + column + ", " + piece);
+
+        if (piece == "S") { // Convert string to cellStatus
+            cs = cellStatus.S;
+        }
+        else if (piece == "O") {
+            cs = cellStatus.O;
+        }
+
+        
 
     }
 
