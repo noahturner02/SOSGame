@@ -145,12 +145,11 @@ public class CellController {
 
     private void replayGameFromTextFile() {
         // Handles replaying the game from the text file
-        Game replayGame;
         if (game.getGameMode() == GameMode.GENERAL) {
-            replayGame = new GeneralGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
+            game = new GeneralGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
         }
         else if (game.getGameMode() == GameMode.SIMPLE) {
-            replayGame = new SimpleGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
+            game = new SimpleGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, true);
         }
 
         hideAllPieces();
@@ -160,7 +159,7 @@ public class CellController {
         int row = 0;
         int column = 0;
         String piece = "Q";
-        cellStatus cs = cellStatus.EMPTY
+        cellStatus cs = cellStatus.EMPTY;
         try {
             BufferedReader br = new BufferedReader(new FileReader("savedGame.txt"));
             String s = br.readLine();
@@ -173,15 +172,15 @@ public class CellController {
         }
         System.out.println("Result: " + row + ", " + column + ", " + piece);
 
-        if (piece == "S") { // Convert string to cellStatus
+        if (piece.equals("S")) { // Convert string to cellStatus
             cs = cellStatus.S;
         }
-        else if (piece == "O") {
+        else if (piece.equals("O")) {
             cs = cellStatus.O;
         }
 
-        
-
+        game.board.getCellByIndex(row, column).setStatus(cs);
+        onClickUI(game.checkForSOS(row, column), getChildFromGridPaneByRowAndColumn(row, column));
     }
 
     private void replayButtonEnableCheck() {

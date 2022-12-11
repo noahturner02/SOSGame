@@ -23,6 +23,7 @@ public class GeneralGame extends Game{
         }
         if (super.board.isFull()) {
             super.setGameFinished(true);
+            writeEOF();
             if (player1Points > player2Points) {
                 winner = Winner.PLAYER1;
             }

@@ -75,6 +75,19 @@ public abstract class Game {
         }
     }
 
+    public void writeEOF() {
+        if (!recordGame) {
+            return;
+        }
+        try {
+            FileWriter writer = new FileWriter(filename, true);
+            writer.append("EOF");
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Coordinate> checkForSOS(int row, int column) { // row and column of last placed item
         List<Coordinate> sosCells = new ArrayList<>();
         if (board.getCellByIndex(row, column).getStatus() == cellStatus.S) {

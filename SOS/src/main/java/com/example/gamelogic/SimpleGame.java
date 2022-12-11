@@ -15,6 +15,7 @@ public class SimpleGame extends Game{
 
         if (!sosList.isEmpty()) {
             super.setGameFinished(true);
+            writeEOF();
             if (getPlayerTurn() == PlayerTurn.PLAYER1) {
                 winner = Winner.PLAYER1;
             }
@@ -24,6 +25,7 @@ public class SimpleGame extends Game{
         }
         if (board.isFull()) {
             setGameFinished(true);
+            writeEOF();
             winner = Winner.DRAW;
         }
         return sosList;
