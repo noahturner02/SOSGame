@@ -178,6 +178,14 @@ public class CellController {
                 game.board.getCellByIndex(row, column).setStatus(cs);
                 onClickUI(game.checkForSOS(row, column), getChildFromGridPaneByRowAndColumn(row, column));
                 s = br.readLine();
+
+                if (game.getPlayerTurn() == PlayerTurn.PLAYER1) {
+                    game.setPlayerTurn(PlayerTurn.PLAYER2);
+                }
+                else {
+                    game.setPlayerTurn(PlayerTurn.PLAYER1);
+                }
+                
             }
             if (game.getGameFinished()) {
                 winDisplay();

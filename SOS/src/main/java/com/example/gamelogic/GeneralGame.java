@@ -194,6 +194,7 @@ public class GeneralGame extends Game{
                 for (int j = 0; j < board.getGameGrid().get(0).size(); j++) {
                     if (board.getCellByIndex(i, j).getStatus() == cellStatus.EMPTY) {
                         board.getCellByIndex(i, j).setStatus(cellStatus.S);
+                        writeToFile(new Coordinate(i, j), cellStatus.S);
                         return new Coordinate(i, j);
                     }
                 }
@@ -201,6 +202,7 @@ public class GeneralGame extends Game{
         }
         if (c != null) {
             board.getCellByIndex(c.getX(), c.getY()).setStatus(computerSelectedPiece);
+            writeToFile(c, computerSelectedPiece);
             if (computerSelectedPiece == cellStatus.S) {
                 computerSelectedPiece = cellStatus.O;
             } else {
@@ -220,18 +222,21 @@ public class GeneralGame extends Game{
             int index = rand.nextInt(selectedList.size());
             Coordinate selectedMove = selectedList.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(piece);
+            writeToFile(selectedMove, piece);
             return selectedMove;
         }
         else if (!potentialSMoves.isEmpty() && potentialOMoves.isEmpty()) { // Only S moves are possible. Choose one
             int index = rand.nextInt(potentialSMoves.size());
             Coordinate selectedMove = potentialSMoves.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.S);
+            writeToFile(selectedMove, cellStatus.S);
             return selectedMove;
         }
         else if (!potentialOMoves.isEmpty() && potentialSMoves.isEmpty()) { // Only O moves are possible. Choose one
             int index = rand.nextInt(potentialOMoves.size());
             Coordinate selectedMove = potentialOMoves.get(index);
             board.getCellByIndex(selectedMove.getX(), selectedMove.getY()).setStatus(cellStatus.O);
+            writeToFile(selectedMove, cellStatus.O);
             return selectedMove;
         }
         else {
