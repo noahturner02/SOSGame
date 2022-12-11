@@ -151,6 +151,7 @@ public class CellController {
         else if (game.getGameMode() == GameMode.SIMPLE) {
             game = new SimpleGame(game.board.getGameGrid().size(), game.player1Type, game.player2Type, false);
         }
+        game.isFake = true;
 
         hideAllPieces();
         removeLines();
@@ -185,7 +186,7 @@ public class CellController {
                 else {
                     game.setPlayerTurn(PlayerTurn.PLAYER1);
                 }
-                
+
             }
             if (game.getGameFinished()) {
                 winDisplay();
@@ -197,9 +198,15 @@ public class CellController {
     }
 
     private void replayButtonEnableCheck() {
-        if (game.getGameFinished() && game.getRecordGame()) {
-            replayButton.setDisable(false);
-        } else {
+        if (game.getGameFinished()) {
+            if (game.getRecordGame() || game.isFake) {
+                replayButton.setDisable(false);
+            }
+            else {
+                replayButton.setDisable(true);
+            }
+        }
+        else {
             replayButton.setDisable(true);
         }
     }

@@ -18,6 +18,7 @@ public abstract class Game {
     public PlayerType player2Type;
     public cellStatus computerSelectedPiece;
     public boolean recordGame = false;
+    public boolean isFake = false; // True for dummy replays
 
     public Game(GameMode gameMode, int gameSize, PlayerType player1Type, PlayerType player2Type, boolean recordGame) {
         this.gameMode = gameMode;
